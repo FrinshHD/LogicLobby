@@ -1,0 +1,60 @@
+enableCloudNetSupport: false
+lobbySwitcher:
+  fillerItem:
+    type: OUTLINE
+    item:
+      material: GRAY_STAINED_GLASS_PANE
+  lobbyItem:
+    types:
+      serverFull:
+        material: RED_GLASS
+      serverNormal:
+        material: GREEN_GLASS
+      serverEmpty:
+        material: GRAY_GLASS
+      serverUnreachable:
+        material: RED_GLASS
+  lobbyServers:
+    - name: Lobby-2
+      host: 127.0.0.1
+      port: 25555
+teleporter:
+  fillerItem:
+    type: OUTLINE
+    item:
+      material: GRAY_STAINED_GLASS_PANE
+  servers:
+    - name: OneBlock
+      description: Player OneBlock with your friends
+      item:
+        material: PLAYER_HEAD
+        texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzQ3ZjIwMTgxNWMyYWI1Y2RmZWUwZmEyOTIyNTJlOGE5YmU2YWM2Y2FmMmIyODRiNDlkODc2ZGVjMDlmZWYxMSJ9fX0=
+        slot: 10
+      host: 127.0.0.1
+      port: 25557
+    - name: PVP
+      description: Battle other players
+      item:
+        material: DIAMOND_SWORD
+        glowing: true
+        slot: 11
+      host: 127.0.0.1
+      port: 25558
+    - name: PotionWars
+      description: Battle other players with potions
+      item:
+        material: POTION
+        texture: DAMAGE_RESISTANCE
+        amount: 5
+        slot: 12
+      host: 127.0.0.1
+      port: 25559
+    - name: HelmetWars
+      description: Battle other players with op helmets
+      item:
+        material: LEATHER_HELMET
+        leatherColor: MAGENTA
+        amount: 5
+        slot: 12
+      host: 127.0.0.1
+      port: 25559
