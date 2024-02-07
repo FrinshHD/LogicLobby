@@ -2,3 +2,7 @@ name: AnturniaLobby
 version: '${project.version}'
 main: de.frinshhd.anturnialobby.Main
 api-version: '1.19'
+author: FrinshHD
+
+commands:
+  dev:

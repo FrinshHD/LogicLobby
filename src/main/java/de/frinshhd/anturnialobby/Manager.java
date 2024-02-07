@@ -3,20 +3,25 @@ package de.frinshhd.anturnialobby;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import de.frinshhd.anturnialobby.model.Config;
-import org.bukkit.command.CommandExecutor;
 
-import java.awt.geom.QuadCurve2D;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Manager {
-    public static Config config;
+    private static Config config;
 
     public Manager() {
-
+        init();
     }
 
-    public static void load() {
+    public void init() {
+        load();
+    }
+
+    public Config getConfig() {
+        return config;
+    }
+
+    public void load() {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         try {

@@ -9,6 +9,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -18,23 +19,19 @@ import java.util.UUID;
 
 public class Item {
     @JsonProperty
-    public Boolean glowing = false;
+    private Boolean glowing = false;
+    @JsonProperty
+    private Integer slot = -1;
     @JsonProperty
     private String material = null;
     @JsonProperty
     private String potion = null;
-
     @JsonProperty
     private String texture = null;
-
     @JsonProperty
     private DyeColor leatherColor = null;
-
     @JsonProperty
     private int amount = 1;
-
-    @JsonProperty
-    public Integer slot = -1;
 
     @JsonIgnore
     public Material getMaterial() {
@@ -73,6 +70,14 @@ public class Item {
             item.setItemMeta(leatherArmorMeta);
         }
 
+        ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        item.setItemMeta(itemMeta);
+
         return item;
+    }
+
+    public int getSlot() {
+        return this.slot;
     }
 }
