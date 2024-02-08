@@ -1,5 +1,6 @@
 package de.frinshhd.anturnialobby.menusystem.library;
 
+import de.frinshhd.anturnialobby.model.FillerType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -8,6 +9,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public abstract class Menu implements InventoryHolder {
 
@@ -37,23 +40,35 @@ public abstract class Menu implements InventoryHolder {
     public abstract void setItems();
 
     public void open() {
-        open(false);
+        open(FillerType.NONE);
     }
 
-    public void open(boolean fillBorders) {
-        open(fillBorders, new ItemStack(Material.GRASS_BLOCK));
+    public void open(FillerType fillerType) {
+        open(fillerType, getFillerItem());
     }
 
-    public void open(boolean fillBorders, ItemStack filler) {
+    public void open(FillerType fillerType, ItemStack filler) {
         createInventory();
 
-        if (fillBorders) {
+        if (fillerType.equals(FillerType.OUTLINE)) {
             fillBorders(filler);
+        } else if (fillerType.equals(FillerType.FULL)) {
+            fillInventory(filler);
         }
 
         setItems();
 
         player.openInventory(inventory);
+    }
+
+    public void fillInventory(ItemStack filler) {
+        for (int i = 0; i < inventory.getSize(); i++) {
+            if (inventory.getItem(i) != null) {
+                continue;
+            }
+
+            inventory.setItem(i, filler);
+        }
     }
 
     public void createInventory() {
@@ -62,6 +77,10 @@ public abstract class Menu implements InventoryHolder {
 
     public void fillBorders(ItemStack item) {
         for (int i = 0; i < inventory.getSize(); i++) {
+
+            if (inventory.getItem(i) != null) {
+                continue;
+            }
 
             if (i < 9) {
                 inventory.setItem(i, item);
@@ -80,4 +99,8 @@ public abstract class Menu implements InventoryHolder {
     }
 
     public abstract void handle(InventoryClickEvent event);
+
+    public ItemStack getFillerItem() {
+        return new ItemStack(Material.GRASS_BLOCK);
+    }
 }

@@ -74,6 +74,8 @@ public final class Main extends JavaPlugin {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        Main.getInstance().getServer().getMessenger().registerOutgoingPluginChannel(Main.getInstance(), "BungeeCord");
     }
 
     @Override

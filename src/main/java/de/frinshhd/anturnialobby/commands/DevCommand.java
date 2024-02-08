@@ -18,7 +18,7 @@ public class DevCommand extends SpigotCommandExecutor {
             return false;
         }
 
-        new TeleporterMenu(player).open(true);
+        new TeleporterMenu(player).open();
 
         return false;
     }
