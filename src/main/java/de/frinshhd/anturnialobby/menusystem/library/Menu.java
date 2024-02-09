@@ -1,6 +1,6 @@
 package de.frinshhd.anturnialobby.menusystem.library;
 
-import de.frinshhd.anturnialobby.model.FillerType;
+import de.frinshhd.anturnialobby.utils.FillerType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,8 +9,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public abstract class Menu implements InventoryHolder {
 

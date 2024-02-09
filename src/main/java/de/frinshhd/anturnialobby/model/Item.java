@@ -39,8 +39,12 @@ public class Item {
     }
 
     @JsonIgnore
-    public ItemStack getItem() {
-        ItemStack item = new ItemStack(getMaterial(), amount);
+    public ItemStack getItem(Material material) {
+        if (material == null) {
+            material = this.getMaterial();
+        }
+
+        ItemStack item = new ItemStack(material, amount);
 
         if (potion != null) {
             PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
@@ -75,6 +79,11 @@ public class Item {
         item.setItemMeta(itemMeta);
 
         return item;
+    }
+
+    @JsonIgnore
+    public ItemStack getItem() {
+        return getItem(this.getMaterial());
     }
 
     public int getSlot() {

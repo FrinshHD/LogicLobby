@@ -1,7 +1,7 @@
 package de.frinshhd.anturnialobby.commands;
 
+import de.frinshhd.anturnialobby.menusystem.LobbySwitcherMenu;
 import de.frinshhd.anturnialobby.menusystem.TeleporterMenu;
-import de.frinshhd.anturnialobby.model.Teleporter;
 import de.frinshhd.anturnialobby.utils.SpigotCommandExecutor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,7 +18,14 @@ public class DevCommand extends SpigotCommandExecutor {
             return false;
         }
 
-        new TeleporterMenu(player).open();
+        if (args[0].equals("lobby")) {
+            new LobbySwitcherMenu(player).open();
+        }
+
+        if (args[0].equals("teleporter")) {
+            new TeleporterMenu(player).open();
+        }
+
 
         return false;
     }

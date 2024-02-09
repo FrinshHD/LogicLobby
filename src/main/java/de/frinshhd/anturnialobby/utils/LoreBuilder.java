@@ -10,6 +10,10 @@ public class LoreBuilder {
     public static List<String> build(String string, ChatColor color) {
         List<String> lines = new ArrayList<>();
 
+        if (string == null) {
+            return lines;
+        }
+
         final int maxLenght = 30;
 
         int index = 0;

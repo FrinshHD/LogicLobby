@@ -7,12 +7,12 @@ import de.frinshhd.anturnialobby.model.Config;
 import de.frinshhd.anturnialobby.model.Server;
 import de.frinshhd.anturnialobby.utils.ItemTags;
 import de.frinshhd.anturnialobby.utils.MessageFormat;
+import de.frinshhd.anturnialobby.utils.Sounds;
 import de.frinshhd.anturnialobby.utils.SpigotTranslator;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.checkerframework.checker.units.qual.A;
 
 public class TeleporterMenu extends Menu {
 
@@ -55,7 +55,7 @@ public class TeleporterMenu extends Menu {
         Player player = (Player) event.getWhoClicked();
         ItemStack item = event.getCurrentItem();
 
-        if (item == null || item.getType().equals(Material.AIR) ){
+        if (item == null || item.getType().equals(Material.AIR)) {
             return;
         }
 
@@ -78,7 +78,7 @@ public class TeleporterMenu extends Menu {
             return;
         }
 
-        player.sendMessage(server.getName());
+        Sounds.itemClick(player);
 
         server.execute(player);
         if (server.getMessage() != null) {

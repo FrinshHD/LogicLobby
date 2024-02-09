@@ -1,6 +1,7 @@
 package de.frinshhd.anturnialobby.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.frinshhd.anturnialobby.utils.FillerType;
 import org.bukkit.inventory.ItemStack;
 
 public class FillerItem {

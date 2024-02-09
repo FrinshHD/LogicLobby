@@ -17,13 +17,14 @@ import java.util.List;
 import java.util.Set;
 
 public final class Main extends JavaPlugin {
+    public static String version;
     private static JavaPlugin instance;
     private static Manager manager;
-    public static String version;
 
     public static JavaPlugin getInstance() {
         return instance;
     }
+
     public static Manager getManager() {
         return manager;
     }
@@ -80,6 +81,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
+        this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
     }
 }

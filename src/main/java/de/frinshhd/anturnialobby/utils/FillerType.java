@@ -1,4 +1,4 @@
-package de.frinshhd.anturnialobby.model;
+package de.frinshhd.anturnialobby.utils;
 
 public enum FillerType {
     NONE,

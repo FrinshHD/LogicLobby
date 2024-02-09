@@ -6,6 +6,7 @@ import de.frinshhd.anturnialobby.Main;
 import de.frinshhd.anturnialobby.utils.ItemTags;
 import de.frinshhd.anturnialobby.utils.LoreBuilder;
 import de.frinshhd.anturnialobby.utils.MessageFormat;
+import de.frinshhd.anturnialobby.utils.SpigotTranslator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,39 +14,31 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.messaging.PluginMessageListener;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class Server {
 
+    @JsonIgnore
+    public String message = null;
     @JsonProperty
     private String id;
     @JsonProperty
     private String name = "Lobby";
-
     @JsonProperty
     private String description = null;
-
     @JsonProperty
     private String task = null;
-
     @JsonProperty
     private String serverName = null;
-
     @JsonProperty
-    private Item item = null;
-
+    private Item item = new Item();
     @JsonProperty
     private List<Double> location = null;
-
     @JsonProperty
     private String world = "world";
-
     @JsonProperty
     private Float yaw = null;
-
     @JsonProperty
     private Float pitch = null;
 
@@ -55,25 +48,17 @@ public class Server {
     }
 
     @JsonIgnore
-    public String message = null;
-
-    @JsonIgnore
     public ItemStack getItem(Material material) {
-        ItemStack item = this.item.getItem();
-
-        if (material != null) {
-            item.setType(material);
-        }
+        ItemStack item = this.item.getItem(material);
 
         ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.setDisplayName(MessageFormat.build(name));
+        itemMeta.setDisplayName(MessageFormat.build(SpigotTranslator.build("items.standardColor") + name));
 
-        itemMeta.setLore(LoreBuilder.build(getDescription(), ChatColor.GRAY));
+        itemMeta.setLore(LoreBuilder.build(getDescription(), ChatColor.getByChar(SpigotTranslator.build("items.standardDescriptionColor").substring(1))));
 
         ItemTags.tagItemMeta(itemMeta, getId());
 
         item.setItemMeta(itemMeta);
-
 
 
         return item;

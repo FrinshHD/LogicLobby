@@ -6,14 +6,12 @@ lobbySwitcher:
       material: GRAY_STAINED_GLASS_PANE
   lobbyItem:
     types:
-      serverFull:
-        material: RED_GLASS
-      serverNormal:
-        material: GREEN_GLASS
-      serverEmpty:
-        material: GRAY_GLASS
-      serverUnreachable:
-        material: RED_GLASS
+      NORMAL:
+        material: GREEN_STAINED_GLASS
+      EMPTY:
+        material: GRAY_STAINED_GLASS
+      UNREACHABLE:
+        material: RED_STAINED_GLASS
   lobbyServers:
     - id: lobby2
       name: Lobby-2
@@ -64,4 +62,4 @@ teleporter:
       item:
         material: BEACON
         slot: 16
-      location: [0,80,0]
+      location: [ 0,80,0 ]
