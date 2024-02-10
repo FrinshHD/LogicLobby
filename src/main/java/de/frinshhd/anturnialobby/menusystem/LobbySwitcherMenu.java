@@ -8,10 +8,12 @@ import de.frinshhd.anturnialobby.menusystem.library.Menu;
 import de.frinshhd.anturnialobby.model.Config;
 import de.frinshhd.anturnialobby.model.Server;
 import de.frinshhd.anturnialobby.utils.*;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jetbrains.annotations.NotNull;
 
@@ -52,7 +54,7 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
 
                 ItemStack item = lobbyServers.getItem(config.getLobbySwitcher().getLobbyItem().getMaterialState(LobbyStates.UNREACHABLE));
                 inventory.setItem(currentSlot, item);
-                items.put(lobbyServers.getServerName(), new SavedItem(10, item));
+                items.put(lobbyServers.getServerName(), new SavedItem(10, item, lobbyServers, lobbyServers.getDescription()));
             }
         }
     }
@@ -147,6 +149,7 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
 
             SavedItem savedItem = items.get(server);
             ItemStack item = savedItem.getItemStack();
+            ItemMeta itemMeta = item.getItemMeta();
 
             LobbyStates lobbyState = LobbyStates.UNREACHABLE;
 
@@ -158,7 +161,12 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
 
             item.setType(config.getLobbySwitcher().getLobbyItem().getMaterialState(lobbyState));
 
+            String lore = SpigotTranslator.replacePlaceholders(savedItem.getLore(), new TranslatorPlaceholder("playercount", String.valueOf(playerCount)));
+
+            itemMeta.setLore(LoreBuilder.build(lore, ChatColor.getByChar(SpigotTranslator.build("items.standardDescriptionColor").substring(1))));
+
             savedItem.updateItemStack(item);
+            savedItem.updateLore(lore);
             inventory.setItem(savedItem.getSlot(), item);
         }
     }

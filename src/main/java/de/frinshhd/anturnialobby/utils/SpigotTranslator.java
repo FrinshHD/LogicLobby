@@ -47,6 +47,12 @@ public class SpigotTranslator {
 
         String message = messages.get(messageKey).toString();
 
+        message = replacePlaceholders(message, translatorPlaceholders);
+
+        return message;
+    }
+
+    public static String replacePlaceholders(String message, TranslatorPlaceholder... translatorPlaceholders) {
         for (TranslatorPlaceholder translatorPlaceholder : translatorPlaceholders) {
             if (translatorPlaceholder.key == null) {
                 continue;

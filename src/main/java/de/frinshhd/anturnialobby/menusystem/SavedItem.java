@@ -1,14 +1,20 @@
 package de.frinshhd.anturnialobby.menusystem;
 
+import de.frinshhd.anturnialobby.model.Server;
 import org.bukkit.inventory.ItemStack;
 
 public class SavedItem {
     private int slot;
     private ItemStack itemStack;
 
-    public SavedItem(int slot, ItemStack itemStack) {
+    private Server server;
+    private String lore;
+
+    public SavedItem(int slot, ItemStack itemStack, Server server, String lore) {
         this.slot = slot;
         this.itemStack = itemStack;
+        this.server = server;
+        this.lore = lore;
     }
 
     public void updateItemStack(ItemStack itemStack) {
@@ -24,4 +30,15 @@ public class SavedItem {
         return this.slot;
     }
 
+    public Server getServer() {
+        return this.server;
+    }
+
+    public String getLore(){
+        return this.lore;
+    }
+
+    public void updateLore(String lore) {
+        this.lore = lore;
+    }
 }
