@@ -113,3 +113,4 @@ buildNumber.properties
 run/
 ./server
 /serverBungee/
+deploy.py
