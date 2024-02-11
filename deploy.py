@@ -77,8 +77,8 @@ class MinecraftClient:
 if __name__ == "__main__":
     async def run():
         async with MinecraftClient('localhost', 25575, 'nicepassword') as mc:
-            shutil.copyfile("./target/AnturniaLobby-1.0.0-alpha.jar",
-                            "./server/plugins/AnturniaLobby.jar")
+            shutil.copyfile("./target/LogicLobby-1.0.0-alpha.jar",
+                            "./server/plugins/LogicLobby.jar")
             output = await mc.send('reload confirm')
             print(output)
 

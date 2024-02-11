@@ -1,6 +1,6 @@
-name: AnturniaLobby
+name: LogicLobby
 version: '${project.version}'
-main: de.frinshhd.anturnialobby.Main
+main: de.frinshhd.logiclobby.Main
 api-version: '1.19'
 author: FrinshHD
 
