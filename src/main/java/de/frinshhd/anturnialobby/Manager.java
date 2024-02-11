@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
@@ -19,12 +20,23 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class Manager implements PluginMessageListener, Listener {
+public class Manager implements PluginMessageListener {
     private static Config config;
-    private String serverName;
+    private String serverName = "";
 
     public Manager() {
         Main.getInstance().getServer().getMessenger().registerIncomingPluginChannel(Main.getInstance(), "BungeeCord", this);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF("GetServer");
+
+                Main.getInstance().getServer().sendPluginMessage(Main.getInstance(), "BungeeCord", out.toByteArray());
+            }
+        }.runTaskLater(Main.getInstance(), 8L);
+
         init();
     }
 
@@ -91,14 +103,14 @@ public class Manager implements PluginMessageListener, Listener {
 
         if (subchannel.equals("GetServer")) {
             String serverName = in.readUTF();
+
             if (!this.serverName.equals(serverName)) {
                 this.serverName = serverName;
             }
         }
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    public void checkForServerName() {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("GetServer");
 

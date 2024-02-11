@@ -1,13 +1,16 @@
 enableCloudNetSupport: false
 lobbySwitcher:
+  inventoryRows: 4
   fillerItem:
     type: OUTLINE
     item:
       material: GRAY_STAINED_GLASS_PANE
   lobbyItem:
     types:
-      NORMAL:
+      CONNECTED:
         material: GREEN_STAINED_GLASS
+      NORMAL:
+        material: LIME_STAINED_GLASS
       EMPTY:
         material: GRAY_STAINED_GLASS
       UNREACHABLE:
@@ -16,7 +19,50 @@ lobbySwitcher:
     - id: lobby2
       name: Lobby-2
       serverName: Lobby-2
+    - id: lobby3
+      name: Lobby-3
+      serverName: Lobby-3
+    - id: lobby4
+      name: Lobby-4
+      serverName: Lobby-4
+    - id: lobby5
+      name: Lobby-5
+      serverName: Lobby-5
+    - id: lobby6
+      name: Lobby-6
+      serverName: Lobby-6
+    - id: lobby7
+      name: Lobby-7
+      serverName: Lobby-7
+    - id: lobby8
+      name: Lobby-8
+      serverName: Lobby-8
+    - id: lobby9
+      name: Lobby-9
+      serverName: Lobby-9
+    - id: lobby10
+      name: Lobby-10
+      serverName: Lobby-10
+    - id: lobby11
+      name: Lobby-11
+      serverName: Lobby-11
+    - id: lobby12
+      name: Lobby-12
+      serverName: Lobby-12
+    - id: lobby13
+      name: Lobby-13
+      serverName: Lobby-13
+    - id: lobby14
+      name: Lobby-14
+      serverName: Lobby-14
+    - id: lobby15
+      name: Lobby-15
+      serverName: Lobby-15
+    - id: lobby16
+      name: Lobby-16
+      serverName: Lobby-16
 teleporter:
+  inventoryRows: 5
   fillerItem:
     type: FULL
     item:

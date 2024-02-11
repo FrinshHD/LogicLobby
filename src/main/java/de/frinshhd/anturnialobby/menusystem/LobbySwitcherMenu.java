@@ -17,6 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
@@ -47,14 +48,33 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
             //Todo: CloudNet implementation
         } else {
 
-            int currentSlot = 10;
+            int currentSlot = 0;
 
-            for (Server lobbyServers : config.getLobbySwitcher().getLobbyServers()) {
-                getCount(player, lobbyServers.getServerName());
+            // Iterating through the inventory
+            for (int i = 0; i < getSlots(); i++) {
+                // Checking if the field is not in the left or right column
+                if (i % 9 != 0 && i % 9 != 8) {
+                    // Checking if the field is not in the first or last row
+                    if (i >= 9 && i < getSlots() - 9) {
+                        // Making sure we do not go beyond the bounds of the list
+                        if (currentSlot < config.getLobbySwitcher().getLobbyServers().size()) {
+                            // Getting the custom block from the list
+                            Server lobbyServer = config.getLobbySwitcher().getLobbyServers().get(currentSlot);
+                            // Filling the field with the custom block
 
-                ItemStack item = lobbyServers.getItem(config.getLobbySwitcher().getLobbyItem().getMaterialState(LobbyStates.UNREACHABLE));
-                inventory.setItem(currentSlot, item);
-                items.put(lobbyServers.getServerName(), new SavedItem(10, item, lobbyServers, lobbyServers.getDescription()));
+                            getCount(player, lobbyServer.getServerName());
+
+                            ItemStack item = lobbyServer.getItem(config.getLobbySwitcher().getLobbyItem().getMaterialState(LobbyStates.UNREACHABLE));
+                            inventory.setItem(i, item);
+                            items.put(lobbyServer.getServerName(), new SavedItem(i, item, lobbyServer, lobbyServer.getDescription()));
+
+                            currentSlot++; // Move to the next custom block in the list
+                        } else {
+                            // If the list of custom blocks is exhausted, break
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -159,11 +179,17 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
                 lobbyState = LobbyStates.EMPTY;
             }
 
+            if (server.equals(Main.getManager().getServerName())) {
+                lobbyState = LobbyStates.CONNECTED;
+            }
+
             item.setType(config.getLobbySwitcher().getLobbyItem().getMaterialState(lobbyState));
 
             String lore = SpigotTranslator.replacePlaceholders(savedItem.getLore(), new TranslatorPlaceholder("playercount", String.valueOf(playerCount)));
 
             itemMeta.setLore(LoreBuilder.build(lore, ChatColor.getByChar(SpigotTranslator.build("items.standardDescriptionColor").substring(1))));
+            item.setItemMeta(itemMeta);
+
 
             savedItem.updateItemStack(item);
             savedItem.updateLore(lore);

@@ -53,6 +53,10 @@ public class SpigotTranslator {
     }
 
     public static String replacePlaceholders(String message, TranslatorPlaceholder... translatorPlaceholders) {
+        if (message == null) {
+            return message;
+        }
+
         for (TranslatorPlaceholder translatorPlaceholder : translatorPlaceholders) {
             if (translatorPlaceholder.key == null) {
                 continue;

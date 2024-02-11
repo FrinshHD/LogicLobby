@@ -1,27 +1,38 @@
 package de.frinshhd.anturnialobby.menusystem;
 
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import de.frinshhd.anturnialobby.Main;
 import de.frinshhd.anturnialobby.Manager;
 import de.frinshhd.anturnialobby.menusystem.library.Menu;
 import de.frinshhd.anturnialobby.model.Config;
 import de.frinshhd.anturnialobby.model.Server;
-import de.frinshhd.anturnialobby.utils.ItemTags;
-import de.frinshhd.anturnialobby.utils.MessageFormat;
-import de.frinshhd.anturnialobby.utils.Sounds;
-import de.frinshhd.anturnialobby.utils.SpigotTranslator;
+import de.frinshhd.anturnialobby.utils.*;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.jetbrains.annotations.NotNull;
 
-public class TeleporterMenu extends Menu {
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+
+public class TeleporterMenu extends Menu implements PluginMessageListener {
 
     private final Config config = Main.getManager().getConfig();
+
+    private static HashMap<String, SavedItem> items = new HashMap<>();
 
     private Manager manager;
 
     public TeleporterMenu(Player player) {
         super(player);
+
+        Main.getInstance().getServer().getMessenger().registerIncomingPluginChannel(Main.getInstance(), "BungeeCord", this);
     }
 
     @Override
@@ -43,7 +54,11 @@ public class TeleporterMenu extends Menu {
         } else {
             config.getTeleporter().getServers().forEach(server -> {
                 if (server.getItemSlot() > -1) {
-                    inventory.setItem(server.getItemSlot(), server.getItem());
+                    getCount(player, server.getServerName());
+
+                    ItemStack item = server.getItem();
+                    inventory.setItem(server.getItemSlot(), item);
+                    items.put(server.getServerName(), new SavedItem(server.getItemSlot(), item, server, server.getDescription()));
                 }
             });
         }
@@ -83,6 +98,80 @@ public class TeleporterMenu extends Menu {
         server.execute(player);
         if (server.getMessage() != null) {
             player.sendMessage(MessageFormat.build(server.getMessage()));
+        }
+    }
+
+    public void getCount(Player player, String server) {
+
+        if (server == null) {
+            return;
+        }
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("PlayerCount");
+        out.writeUTF(server);
+
+        player.sendPluginMessage(Main.getInstance(), "BungeeCord", out.toByteArray());
+    }
+
+    @Override
+    public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, @NotNull byte[] message) {
+        if (!channel.equals("BungeeCord")) {
+            return;
+        }
+
+        ByteArrayDataInput in = ByteStreams.newDataInput(message);
+
+        // Checking available bytes for reading the subchannel
+        if (message.length < 2) {
+            return;
+        }
+
+        // Read the subchannel
+        String subchannel = in.readUTF();
+
+        if (message.length < 2 + 2 + subchannel.getBytes(StandardCharsets.UTF_8).length) {
+            return;
+        }
+
+        if (subchannel.equals("PlayerCount")) {
+            // Read the server name
+            String server = in.readUTF();
+
+            // Checking available bytes for reading the integer
+            // The length of the subchannel, server name, and the length of the integer
+            if (message.length < 2 + 2 + subchannel.getBytes(StandardCharsets.UTF_8).length + 4) {
+                return;
+            }
+
+            int playerCount = in.readInt();
+
+            if (!player.getUniqueId().equals(this.player.getUniqueId())) {
+                return;
+            }
+
+            if (inventory == null) {
+                return;
+            }
+
+            if (!items.containsKey(server)) {
+                return;
+            }
+
+            SavedItem savedItem = items.get(server);
+            ItemStack item = savedItem.getItemStack();
+            ItemMeta itemMeta = item.getItemMeta();
+
+
+            String lore = SpigotTranslator.replacePlaceholders(savedItem.getLore(), new TranslatorPlaceholder("playercount", String.valueOf(playerCount)));
+
+            itemMeta.setLore(LoreBuilder.build(lore, ChatColor.getByChar(SpigotTranslator.build("items.standardDescriptionColor").substring(1))));
+
+            item.setItemMeta(itemMeta);
+
+            savedItem.updateItemStack(item);
+            savedItem.updateLore(lore);
+            inventory.setItem(savedItem.getSlot(), item);
         }
     }
 

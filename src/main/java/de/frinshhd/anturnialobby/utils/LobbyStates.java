@@ -4,4 +4,5 @@ public enum LobbyStates {
     NORMAL,
     EMPTY,
     UNREACHABLE,
+    CONNECTED,
 }

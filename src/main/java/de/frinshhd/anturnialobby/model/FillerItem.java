@@ -3,6 +3,7 @@ package de.frinshhd.anturnialobby.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import de.frinshhd.anturnialobby.utils.FillerType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class FillerItem {
 
@@ -13,6 +14,11 @@ public class FillerItem {
 
     public ItemStack getItem() {
         ItemStack item = this.item.getItem();
+        ItemMeta itemMeta = item.getItemMeta();
+
+        itemMeta.setDisplayName("");
+
+        item.setItemMeta(itemMeta);
 
         return item;
     }
