@@ -57,8 +57,16 @@ public class TeleporterMenu extends Menu implements PluginMessageListener {
                     getCount(player, server.getServerName());
 
                     ItemStack item = server.getItem();
+                    ItemMeta itemMeta = item.getItemMeta();
+
+                    String lore = SpigotTranslator.replacePlaceholders(server.getDescription(), new TranslatorPlaceholder("playercount", "0"), new TranslatorPlaceholder("status", SpigotTranslator.build("status.offline")));
+
+                    itemMeta.setLore(LoreBuilder.build(lore, ChatColor.getByChar(SpigotTranslator.build("items.standardDescriptionColor").substring(1))));
+
+                    item.setItemMeta(itemMeta);
+
                     inventory.setItem(server.getItemSlot(), item);
-                    items.put(server.getServerName(), new SavedItem(server.getItemSlot(), item, server, server.getDescription()));
+                    items.put(server.getServerName(), new SavedItem(server.getItemSlot(), item, server, lore));
                 }
             });
         }
@@ -163,7 +171,7 @@ public class TeleporterMenu extends Menu implements PluginMessageListener {
             ItemMeta itemMeta = item.getItemMeta();
 
 
-            String lore = SpigotTranslator.replacePlaceholders(savedItem.getLore(), new TranslatorPlaceholder("playercount", String.valueOf(playerCount)));
+            String lore = SpigotTranslator.replacePlaceholders(savedItem.getServer().getDescription(), new TranslatorPlaceholder("playercount", String.valueOf(playerCount)), new TranslatorPlaceholder("status", SpigotTranslator.build("status.online")));
 
             itemMeta.setLore(LoreBuilder.build(lore, ChatColor.getByChar(SpigotTranslator.build("items.standardDescriptionColor").substring(1))));
 

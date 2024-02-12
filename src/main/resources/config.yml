@@ -1,4 +1,22 @@
 enableCloudNetSupport: false
+defaultHotbarSlot: 4
+spawn:
+  teleportOnJoin: true
+  location: [ 0,80,0 ]
+  world: "world"
+  yaw: 0
+  pitch: 0
+items:
+  - id: teleporter
+    friendlyName: "&2Teleporter"
+    material: COMPASS
+    slot: 4
+    menu: TELEPORTER
+  - id: lobbyswitcher
+    friendlyName: "&2Lobby-Switcher"
+    material: STONE
+    slot: 5
+    menu: LOBBYSWITCHER
 lobbySwitcher:
   inventoryRows: 4
   fillerItem:
@@ -19,48 +37,63 @@ lobbySwitcher:
     - id: lobby2
       name: Lobby-2
       serverName: Lobby-2
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby3
       name: Lobby-3
       serverName: Lobby-3
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby4
       name: Lobby-4
       serverName: Lobby-4
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby5
       name: Lobby-5
       serverName: Lobby-5
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby6
       name: Lobby-6
       serverName: Lobby-6
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby7
       name: Lobby-7
       serverName: Lobby-7
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby8
       name: Lobby-8
       serverName: Lobby-8
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby9
       name: Lobby-9
       serverName: Lobby-9
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby10
       name: Lobby-10
       serverName: Lobby-10
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby11
       name: Lobby-11
       serverName: Lobby-11
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby12
       name: Lobby-12
       serverName: Lobby-12
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby13
       name: Lobby-13
       serverName: Lobby-13
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby14
       name: Lobby-14
       serverName: Lobby-14
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby15
       name: Lobby-15
       serverName: Lobby-15
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby16
       name: Lobby-16
       serverName: Lobby-16
+      description: "Players: %playercount%\nStatus: %status%"
 teleporter:
   inventoryRows: 5
   fillerItem:
@@ -70,42 +103,42 @@ teleporter:
   servers:
     - id: oneblock
       name: OneBlock
-      description: Player OneBlock with your friends
+      description: "Play OneBlock with your friends\n\nPlayers: %playercount%\nStatus: %status%"
       item:
         material: PLAYER_HEAD
         texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzQ3ZjIwMTgxNWMyYWI1Y2RmZWUwZmEyOTIyNTJlOGE5YmU2YWM2Y2FmMmIyODRiNDlkODc2ZGVjMDlmZWYxMSJ9fX0=
-        slot: 10
+        slot: 13
       serverName: OneBlock
     - id: pvp
       name: PVP
-      description: Battle other players
+      description: "Battle other players\n\nPlayers: %playercount%\nStatus: %status%"
       item:
         material: DIAMOND_SWORD
         glowing: true
-        slot: 11
+        slot: 19
       serverName: PVP
     - id: potionWars
       name: PotionWars
-      description: Battle other players with potions
+      description: "Battle other players with potions\n\nPlayers: %playercount%\nStatus: %status%"
       item:
         material: POTION
         potion: DAMAGE_RESISTANCE
         amount: 5
-        slot: 12
+        slot: 25
       serverName: PotionWars
     - id: helmetWars
       name: HelmetWars
-      description: Battle other players with op helmets
+      description: "Battle other players with op helmets\n\nPlayers: %playercount%\nStatus: %status%"
       item:
         material: LEATHER_HELMET
         leatherColor: MAGENTA
         amount: 5
-        slot: 13
+        slot: 31
       serverName: HelmetWars
     - id: spawn
       name: Spawn
-      description: Teleport to the spawn
+      description: "Teleport to the spawn"
       item:
         material: BEACON
-        slot: 16
+        slot: 44
       location: [ 0,80,0 ]

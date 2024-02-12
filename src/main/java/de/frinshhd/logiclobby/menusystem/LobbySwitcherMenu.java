@@ -64,6 +64,15 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
                             getCount(player, lobbyServer.getServerName());
 
                             ItemStack item = lobbyServer.getItem(config.getLobbySwitcher().getLobbyItem().getMaterialState(LobbyStates.UNREACHABLE));
+
+                            ItemMeta itemMeta = item.getItemMeta();
+
+                            String lore = SpigotTranslator.replacePlaceholders(lobbyServer.getDescription(), new TranslatorPlaceholder("playercount", "0"), new TranslatorPlaceholder("status", SpigotTranslator.build("status.offline")));
+
+                            itemMeta.setLore(LoreBuilder.build(lore, ChatColor.getByChar(SpigotTranslator.build("items.standardDescriptionColor").substring(1))));
+
+                            item.setItemMeta(itemMeta);
+
                             inventory.setItem(i, item);
                             items.put(lobbyServer.getServerName(), new SavedItem(i, item, lobbyServer, lobbyServer.getDescription()));
 
@@ -171,20 +180,24 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
             ItemMeta itemMeta = item.getItemMeta();
 
             LobbyStates lobbyState = LobbyStates.UNREACHABLE;
+            boolean status = false;
 
             if (playerCount > 0) {
                 lobbyState = LobbyStates.NORMAL;
+                status = true;
             } else if (playerCount == 0) {
                 lobbyState = LobbyStates.EMPTY;
+                status = true;
             }
 
             if (server.equals(Main.getManager().getServerName())) {
                 lobbyState = LobbyStates.CONNECTED;
+                status = true;
             }
 
             item.setType(config.getLobbySwitcher().getLobbyItem().getMaterialState(lobbyState));
 
-            String lore = SpigotTranslator.replacePlaceholders(savedItem.getLore(), new TranslatorPlaceholder("playercount", String.valueOf(playerCount)));
+            String lore = SpigotTranslator.replacePlaceholders(savedItem.getServer().getDescription(), new TranslatorPlaceholder("playercount", String.valueOf(playerCount)), new TranslatorPlaceholder("status", SpigotTranslator.build("status.online")));
 
             itemMeta.setLore(LoreBuilder.build(lore, ChatColor.getByChar(SpigotTranslator.build("items.standardDescriptionColor").substring(1))));
             item.setItemMeta(itemMeta);

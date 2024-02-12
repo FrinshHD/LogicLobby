@@ -6,8 +6,14 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import de.frinshhd.logiclobby.model.Config;
+import de.frinshhd.logiclobby.utils.SpigotTranslator;
+import de.frinshhd.logiclobby.utils.TranslatorPlaceholder;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -17,11 +23,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class Manager implements PluginMessageListener {
+public class Manager implements PluginMessageListener, Listener {
     private static Config config;
     private String serverName = "";
 
-    public Manager() {
+    public Manager(boolean notRegistered) {
         Main.getInstance().getServer().getMessenger().registerIncomingPluginChannel(Main.getInstance(), "BungeeCord", this);
 
         new BukkitRunnable() {
@@ -34,11 +40,17 @@ public class Manager implements PluginMessageListener {
             }
         }.runTaskLater(Main.getInstance(), 8L);
 
+        Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
+
         init();
     }
 
     public void init() {
         load();
+
+        config.getItems().forEach(item -> {
+            Main.getItemManager().addItem(item);
+        });
     }
 
     public Config getConfig() {
@@ -112,5 +124,38 @@ public class Manager implements PluginMessageListener {
         out.writeUTF("GetServer");
 
         Main.getInstance().getServer().sendPluginMessage(Main.getInstance(), "BungeeCord", out.toByteArray());
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+
+        if (config.getDefaultHotbarSlot() > -1) {
+            player.getInventory().setHeldItemSlot(config.getDefaultHotbarSlot());
+        }
+
+        event.setJoinMessage(SpigotTranslator.build("player.join", new TranslatorPlaceholder("player", player.getName())));
+
+        player.getInventory().clear();
+        player.updateInventory();
+
+        config.getItems().forEach(item -> {
+            if (item.getSlot() > -1) {
+                player.getInventory().setItem(item.getSlot(), item.getItem());
+            }
+        });
+
+        player.updateInventory();
+
+        if (config.getSpawn().isTeleportOnJoin()) {
+            player.teleport(config.getSpawn().getLocation());
+        }
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+
+        event.setQuitMessage(SpigotTranslator.build("player.leave", new TranslatorPlaceholder("player", player.getName())));
     }
 }

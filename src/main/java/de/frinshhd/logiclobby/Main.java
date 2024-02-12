@@ -1,5 +1,6 @@
 package de.frinshhd.logiclobby;
 
+import de.frinshhd.logiclobby.itemsystem.ItemsManager;
 import de.frinshhd.logiclobby.utils.DynamicCommands;
 import de.frinshhd.logiclobby.utils.DynamicListeners;
 import de.frinshhd.logiclobby.utils.Metrics;
@@ -20,6 +21,7 @@ public final class Main extends JavaPlugin {
     public static String version;
     private static JavaPlugin instance;
     private static Manager manager;
+    private static ItemsManager itemsManager;
 
     public static JavaPlugin getInstance() {
         return instance;
@@ -27,6 +29,9 @@ public final class Main extends JavaPlugin {
 
     public static Manager getManager() {
         return manager;
+    }
+    public static ItemsManager getItemManager() {
+        return itemsManager;
     }
 
     @Override
@@ -53,7 +58,9 @@ public final class Main extends JavaPlugin {
             }
         }
 
-        manager = new Manager();
+        itemsManager = new ItemsManager();
+        manager = new Manager(true);
+
 
         //Bstats
         int pluginId = 20932;

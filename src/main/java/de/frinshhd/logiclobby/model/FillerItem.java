@@ -16,7 +16,7 @@ public class FillerItem {
         ItemStack item = this.item.getItem();
         ItemMeta itemMeta = item.getItemMeta();
 
-        itemMeta.setDisplayName("");
+        itemMeta.setDisplayName(" ");
 
         item.setItemMeta(itemMeta);
 

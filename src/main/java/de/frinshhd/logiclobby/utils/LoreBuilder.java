@@ -23,17 +23,25 @@ public class LoreBuilder {
         while (string.length() > index) {
             char c = string.charAt(index);
 
-            if (c == ' ') {
-                lastSpace = index;
+            if (c == ' ' || c == '\n') {
+                if (c == '\n') {
+                    lastSpace = index;
+                } else {
+                    lastSpace = index;
+                }
             }
 
-            if (index - lastLineBreak > maxLenght) {
+            if (index - lastLineBreak > maxLenght || c == '\n') {
                 if (color != null) {
                     lines.add(color + string.substring(lastLineBreak, lastSpace));
                 } else {
                     lines.add(string.substring(lastLineBreak, lastSpace));
                 }
-                lastLineBreak = lastSpace + 1;
+                if (c == '\n') {
+                    lastLineBreak = index + 1;
+                } else {
+                    lastLineBreak = lastSpace + 1;
+                }
             }
 
             index++;
@@ -47,6 +55,7 @@ public class LoreBuilder {
 
         return lines;
     }
+
 
     public static List<String> build(String string) {
         return build(string, null);
