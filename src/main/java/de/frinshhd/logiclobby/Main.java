@@ -1,10 +1,7 @@
 package de.frinshhd.logiclobby;
 
 import de.frinshhd.logiclobby.itemsystem.ItemsManager;
-import de.frinshhd.logiclobby.utils.DynamicCommands;
-import de.frinshhd.logiclobby.utils.DynamicListeners;
-import de.frinshhd.logiclobby.utils.Metrics;
-import de.frinshhd.logiclobby.utils.SpigotTranslator;
+import de.frinshhd.logiclobby.utils.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
@@ -16,6 +13,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 
 public final class Main extends JavaPlugin {
     public static String version;
@@ -38,6 +36,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        Main.getInstance().getLogger().setLevel(Level.OFF);
 
         //create files
         new File("plugins/LogicLobby").mkdir();
@@ -61,6 +60,8 @@ public final class Main extends JavaPlugin {
 
         itemsManager = new ItemsManager();
         manager = new Manager(true);
+
+        SpigotMCCommunication.init();
 
 
         //Bstats

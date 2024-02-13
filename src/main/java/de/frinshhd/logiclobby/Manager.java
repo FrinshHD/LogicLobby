@@ -6,6 +6,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import de.frinshhd.logiclobby.model.Config;
+import de.frinshhd.logiclobby.utils.SpigotMCCommunication;
 import de.frinshhd.logiclobby.utils.SpigotTranslator;
 import de.frinshhd.logiclobby.utils.TranslatorPlaceholder;
 import eu.cloudnetservice.driver.inject.InjectionLayer;
@@ -159,6 +160,15 @@ public class Manager implements PluginMessageListener, Listener {
         if (config.getSpawn().isTeleportOnJoin()) {
             player.teleport(config.getSpawn().getLocation());
         }
+
+        //check for newer version
+        if (player.hasPermission("logiclobby.admin.updateNotify") && Main.version != null) {
+            if (!Main.version.equals(Main.getInstance().getDescription().getVersion())) {
+                player.sendMessage(SpigotTranslator.build("updateAvailable", new TranslatorPlaceholder("newVersion", Main.version), new TranslatorPlaceholder("currentVersion", Main.getInstance().getDescription().getVersion())));
+            }
+        }
+
+
     }
 
     @EventHandler

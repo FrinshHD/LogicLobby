@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class DevCommand extends SpigotCommandExecutor {
-    public DevCommand() {
+    public DevCommand(boolean notGenerated) {
         super("dev");
     }
 

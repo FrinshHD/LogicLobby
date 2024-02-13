@@ -22,14 +22,14 @@ public class DynamicListeners {
                     Class<Listener> listenerClass = Listener.class;
 
                     if (listenerClass.isAssignableFrom(cls)) {
-                        Main.getInstance().getLogger().info("[DynamicListeners] Loading listener in class " + className);
+                        //Main.getInstance().getLogger().info("[DynamicListeners] Loading listener in class " + className);
 
                         Constructor<?> constructor = cls.getConstructors()[0];
                         Listener listener = (Listener) constructor.newInstance();
 
 
                         Main.getInstance().getServer().getPluginManager().registerEvents(listener, Main.getInstance());
-                        Main.getInstance().getLogger().info("[DynamicListeners] Finished loading listener in  class " + className);
+                        //Main.getInstance().getLogger().info("[DynamicListeners] Finished loading listener in  class " + className);
                     }
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                          InvocationTargetException | IllegalArgumentException e) {

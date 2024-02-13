@@ -23,6 +23,10 @@ lobbySwitcher:
     type: OUTLINE
     item:
       material: GRAY_STAINED_GLASS_PANE
+  # use this only if you have CloudNet support enabled
+  #lobbyTask:
+  #  taskName: "Lobby"
+  #  description: "%status%, %playercount%"
   lobbyItem:
     types:
       CONNECTED:
