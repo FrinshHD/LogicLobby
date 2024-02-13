@@ -30,6 +30,7 @@ public final class Main extends JavaPlugin {
     public static Manager getManager() {
         return manager;
     }
+
     public static ItemsManager getItemManager() {
         return itemsManager;
     }

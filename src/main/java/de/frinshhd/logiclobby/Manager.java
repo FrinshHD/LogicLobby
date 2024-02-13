@@ -8,6 +8,8 @@ import com.google.common.io.ByteStreams;
 import de.frinshhd.logiclobby.model.Config;
 import de.frinshhd.logiclobby.utils.SpigotTranslator;
 import de.frinshhd.logiclobby.utils.TranslatorPlaceholder;
+import eu.cloudnetservice.driver.inject.InjectionLayer;
+import eu.cloudnetservice.wrapper.holder.ServiceInfoHolder;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
@@ -45,6 +48,12 @@ public class Manager implements PluginMessageListener, Listener {
         init();
     }
 
+    public String getCloudNetServiceName() {
+        String serverName = String.valueOf(new StringBuilder(InjectionLayer.ext().instance(ServiceInfoHolder.class).serviceInfo().name()));
+
+        return serverName;
+    }
+
     public void init() {
         load();
 
@@ -61,7 +70,7 @@ public class Manager implements PluginMessageListener, Listener {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         try {
-            config = mapper.readValue(Manager.class.getClassLoader().getResourceAsStream("config.yml"), Config.class);
+            config = mapper.readValue(new FileInputStream("plugins/LogicLobby/config.yml"), Config.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

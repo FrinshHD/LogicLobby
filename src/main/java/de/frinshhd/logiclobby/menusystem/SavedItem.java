@@ -34,7 +34,7 @@ public class SavedItem {
         return this.server;
     }
 
-    public String getLore(){
+    public String getLore() {
         return this.lore;
     }
 

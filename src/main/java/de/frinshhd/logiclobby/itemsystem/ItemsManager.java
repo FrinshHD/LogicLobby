@@ -1,14 +1,8 @@
 package de.frinshhd.logiclobby.itemsystem;
 
-import de.frinshhd.logiclobby.Main;
 import de.frinshhd.logiclobby.model.ClickItem;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.net.http.WebSocket;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 
 public class ItemsManager {
 

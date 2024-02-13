@@ -3,7 +3,10 @@ package de.frinshhd.logiclobby.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import de.frinshhd.logiclobby.Main;
-import de.frinshhd.logiclobby.utils.*;
+import de.frinshhd.logiclobby.utils.ItemTags;
+import de.frinshhd.logiclobby.utils.LoreBuilder;
+import de.frinshhd.logiclobby.utils.MessageFormat;
+import de.frinshhd.logiclobby.utils.SpigotTranslator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,8 +28,6 @@ public class Server {
     @JsonProperty
     private String description = null;
     @JsonProperty
-    private String task = null;
-    @JsonProperty
     private String serverName = null;
     @JsonProperty
     private Item item = new Item();
@@ -39,13 +40,26 @@ public class Server {
     @JsonProperty
     private Float pitch = null;
 
+    @JsonProperty
+    private String task = null;
+
     @JsonIgnore
     public ItemStack getItem() {
-        return getItem(null);
+        return getItem(getId(), null);
+    }
+
+    @JsonIgnore
+    public ItemStack getItem(String tagID) {
+        return getItem(tagID, null);
     }
 
     @JsonIgnore
     public ItemStack getItem(Material material) {
+        return getItem(getId(), material);
+    }
+
+    @JsonIgnore
+    public ItemStack getItem(String tagID, Material material) {
         ItemStack item = this.item.getItem(material);
 
         ItemMeta itemMeta = item.getItemMeta();
@@ -53,7 +67,7 @@ public class Server {
 
         itemMeta.setLore(LoreBuilder.build(getDescription(), ChatColor.getByChar(SpigotTranslator.build("items.standardDescriptionColor").substring(1))));
 
-        ItemTags.tagItemMeta(itemMeta, getId());
+        ItemTags.tagItemMeta(itemMeta, tagID);
 
         item.setItemMeta(itemMeta);
 
@@ -111,10 +125,18 @@ public class Server {
     }
 
     public String getServerName() {
+        if (this.serverName == null) {
+            return getId();
+        }
+
         return this.serverName;
     }
 
     public String getMessage() {
         return this.message;
+    }
+
+    public String getTask() {
+        return this.task;
     }
 }

@@ -1,13 +1,11 @@
 package de.frinshhd.logiclobby.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import de.frinshhd.logiclobby.Main;
 import de.frinshhd.logiclobby.menusystem.LobbySwitcherMenu;
 import de.frinshhd.logiclobby.menusystem.TeleporterMenu;
 import de.frinshhd.logiclobby.utils.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -29,7 +27,7 @@ public class ClickItem extends Item {
         return this.description;
     }
 
-    public String getFriendlyName(){
+    public String getFriendlyName() {
         return this.friendlyName;
     }
 
@@ -43,7 +41,7 @@ public class ClickItem extends Item {
 
     @Override
     public ItemStack getItem() {
-        ItemStack item =  super.getItem();
+        ItemStack item = super.getItem();
         ItemMeta itemMeta = item.getItemMeta();
 
         if (getFriendlyName() != null) {

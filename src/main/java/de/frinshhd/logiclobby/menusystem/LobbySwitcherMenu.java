@@ -8,6 +8,16 @@ import de.frinshhd.logiclobby.menusystem.library.Menu;
 import de.frinshhd.logiclobby.model.Config;
 import de.frinshhd.logiclobby.model.Server;
 import de.frinshhd.logiclobby.utils.*;
+import eu.cloudnetservice.driver.inject.InjectionLayer;
+import eu.cloudnetservice.driver.provider.CloudServiceProvider;
+import eu.cloudnetservice.driver.registry.ServiceRegistry;
+import eu.cloudnetservice.driver.service.ServiceInfoSnapshot;
+import eu.cloudnetservice.modules.bridge.BridgeDocProperties;
+import eu.cloudnetservice.modules.bridge.BridgeServiceHelper;
+import eu.cloudnetservice.modules.bridge.BridgeServiceHelper.ServiceInfoState;
+import eu.cloudnetservice.modules.bridge.player.CloudPlayer;
+import eu.cloudnetservice.modules.bridge.player.PlayerManager;
+import eu.cloudnetservice.modules.bridge.player.executor.PlayerExecutor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,6 +29,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
 
@@ -44,7 +56,71 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
     @Override
     public void setItems() {
         if (config.hasCloudNetSupportEnabled()) {
-            //Todo: CloudNet implementation
+            //CloudNet v4 implementation
+            List<ServiceInfoSnapshot> services = InjectionLayer.ext().instance(CloudServiceProvider.class).servicesByTask(config.getLobbySwitcher().getLobbyTask().getTaskName()).stream().toList();
+            int currentSlot = 0;
+
+            // Iterating through the inventory
+            for (int i = 0; i < getSlots(); i++) {
+                // Checking if the field is not in the left or right column
+                if (i % 9 != 0 && i % 9 != 8) {
+                    // Checking if the field is not in the first or last row
+                    if (i >= 9 && i < getSlots() - 9) {
+                        // Making sure we do not go beyond the bounds of the list
+                        if (currentSlot < services.size()) {
+                            // Getting the custom block from the list
+                            ServiceInfoSnapshot lobbyServer = services.get(currentSlot);
+                            ServiceInfoState state = BridgeServiceHelper.guessStateFromServiceInfoSnapshot(lobbyServer);
+
+                            LobbyState lobbyState = LobbyState.UNREACHABLE;
+                            int playerCount = 0;
+
+                            if (state.equals(ServiceInfoState.ONLINE) ||
+                                    state.equals(ServiceInfoState.STARTING) ||
+                                    state.equals(ServiceInfoState.EMPTY_ONLINE) ||
+                                    state.equals(ServiceInfoState.FULL_ONLINE)) {
+                                playerCount = lobbyServer.readProperty(BridgeDocProperties.ONLINE_COUNT);
+
+                                if (state.equals(ServiceInfoState.FULL_ONLINE)) {
+                                    lobbyState = LobbyState.NORMAL;
+                                } else if (state.equals(ServiceInfoState.STARTING)) {
+                                    lobbyState = LobbyState.UNREACHABLE;
+                                } else if (state.equals(ServiceInfoState.EMPTY_ONLINE)) {
+                                    lobbyState = LobbyState.EMPTY;
+                                }
+
+                                if (Main.getManager().getCloudNetServiceName().equals(lobbyServer.name())) {
+                                    lobbyState = LobbyState.CONNECTED;
+                                }
+                            }
+
+                            boolean status = !lobbyState.equals(LobbyState.UNREACHABLE);
+
+                            // Filling the field with the custom block
+                            ItemStack item = config.getLobbySwitcher().getLobbyTask().getItem(lobbyServer.name(), config.getLobbySwitcher().getLobbyItem().getMaterialState(lobbyState));
+
+                            ItemMeta itemMeta = item.getItemMeta();
+
+                            String lore;
+                            if (status) {
+                                lore = SpigotTranslator.replacePlaceholders(config.getLobbySwitcher().getLobbyTask().getDescription(), new TranslatorPlaceholder("playercount", String.valueOf(playerCount)), new TranslatorPlaceholder("status", SpigotTranslator.build("status.online")));
+                            } else {
+                                lore = SpigotTranslator.replacePlaceholders(config.getLobbySwitcher().getLobbyTask().getDescription(), new TranslatorPlaceholder("playercount", String.valueOf(playerCount)), new TranslatorPlaceholder("status", SpigotTranslator.build("status.offline")));
+                            }
+
+                            itemMeta.setLore(LoreBuilder.build(lore, ChatColor.getByChar(SpigotTranslator.build("items.standardDescriptionColor").substring(1))));
+
+                            item.setItemMeta(itemMeta);
+
+                            inventory.setItem(i, item);
+                            currentSlot++; // Move to the next custom block in the list
+                        } else {
+                            // If the list of custom blocks is exhausted, break
+                            break;
+                        }
+                    }
+                }
+            }
         } else {
 
             int currentSlot = 0;
@@ -63,7 +139,7 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
 
                             getCount(player, lobbyServer.getServerName());
 
-                            ItemStack item = lobbyServer.getItem(config.getLobbySwitcher().getLobbyItem().getMaterialState(LobbyStates.UNREACHABLE));
+                            ItemStack item = lobbyServer.getItem(config.getLobbySwitcher().getLobbyItem().getMaterialState(LobbyState.UNREACHABLE));
 
                             ItemMeta itemMeta = item.getItemMeta();
 
@@ -102,6 +178,39 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
             return;
         }
 
+        if (config.hasCloudNetSupportEnabled()) {
+            List<ServiceInfoSnapshot> services = InjectionLayer.ext().instance(CloudServiceProvider.class).services().stream().toList();
+            ServiceInfoSnapshot service = null;
+
+            for (ServiceInfoSnapshot ser : services) {
+                if (ser.name().equals(id)) {
+                    service = ser;
+                    break;
+                }
+            }
+
+            if (service == null) {
+                return;
+            }
+
+            ServiceInfoState state = BridgeServiceHelper.guessStateFromServiceInfoSnapshot(service);
+
+            if (state.equals(ServiceInfoState.STARTING) || state.equals(ServiceInfoState.STOPPED)) {
+                return;
+            }
+
+            ServiceRegistry serviceRegistry = InjectionLayer.ext().instance(ServiceRegistry.class);
+            PlayerManager playerManager = serviceRegistry.firstProvider(PlayerManager.class);
+
+            CloudPlayer cloudPlayer = playerManager.onlinePlayer(player.getUniqueId());
+
+            PlayerExecutor playerExecutor = playerManager.playerExecutor(Objects.requireNonNull(cloudPlayer).uniqueId());
+
+
+            playerExecutor.connect(service.name());
+            return;
+        }
+
         Server server = null;
 
         for (Server servers : config.getLobbySwitcher().getLobbyServers()) {
@@ -122,6 +231,7 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
             player.sendMessage(MessageFormat.build(server.getMessage()));
         }
     }
+
     public void getCount(Player player, String server) {
 
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -179,19 +289,19 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
             ItemStack item = savedItem.getItemStack();
             ItemMeta itemMeta = item.getItemMeta();
 
-            LobbyStates lobbyState = LobbyStates.UNREACHABLE;
+            LobbyState lobbyState = LobbyState.UNREACHABLE;
             boolean status = false;
 
             if (playerCount > 0) {
-                lobbyState = LobbyStates.NORMAL;
+                lobbyState = LobbyState.NORMAL;
                 status = true;
             } else if (playerCount == 0) {
-                lobbyState = LobbyStates.EMPTY;
+                lobbyState = LobbyState.EMPTY;
                 status = true;
             }
 
             if (server.equals(Main.getManager().getServerName())) {
-                lobbyState = LobbyStates.CONNECTED;
+                lobbyState = LobbyState.CONNECTED;
                 status = true;
             }
 

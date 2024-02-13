@@ -3,6 +3,7 @@ version: '${project.version}'
 main: de.frinshhd.logiclobby.Main
 api-version: '1.19'
 author: FrinshHD
+softdepend: [ SuperVanish, PremiumVanish, CloudNet-Bridge ]
 
 commands:
   dev:

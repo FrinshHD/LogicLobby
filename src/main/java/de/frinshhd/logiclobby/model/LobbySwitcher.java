@@ -12,6 +12,9 @@ public class LobbySwitcher {
     private LobbyItem lobbyItem = null;
 
     @JsonProperty
+    private LobbyTask lobbyTask = null;
+
+    @JsonProperty
     private ArrayList<Server> lobbyServers = new ArrayList<>();
 
     @JsonProperty
@@ -31,5 +34,9 @@ public class LobbySwitcher {
 
     public LobbyItem getLobbyItem() {
         return this.lobbyItem;
+    }
+
+    public LobbyTask getLobbyTask() {
+        return this.lobbyTask;
     }
 }

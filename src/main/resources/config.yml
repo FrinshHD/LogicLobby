@@ -14,7 +14,7 @@ items:
     menu: TELEPORTER
   - id: lobbyswitcher
     friendlyName: "&2Lobby-Switcher"
-    material: STONE
+    material: NETHER_STAR
     slot: 5
     menu: LOBBYSWITCHER
 lobbySwitcher:
@@ -34,65 +34,13 @@ lobbySwitcher:
       UNREACHABLE:
         material: RED_STAINED_GLASS
   lobbyServers:
+    - id: lobby1
+      name: Lobby-1
+      serverName: Lobby-1
+      description: "Players: %playercount%\nStatus: %status%"
     - id: lobby2
       name: Lobby-2
       serverName: Lobby-2
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby3
-      name: Lobby-3
-      serverName: Lobby-3
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby4
-      name: Lobby-4
-      serverName: Lobby-4
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby5
-      name: Lobby-5
-      serverName: Lobby-5
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby6
-      name: Lobby-6
-      serverName: Lobby-6
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby7
-      name: Lobby-7
-      serverName: Lobby-7
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby8
-      name: Lobby-8
-      serverName: Lobby-8
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby9
-      name: Lobby-9
-      serverName: Lobby-9
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby10
-      name: Lobby-10
-      serverName: Lobby-10
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby11
-      name: Lobby-11
-      serverName: Lobby-11
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby12
-      name: Lobby-12
-      serverName: Lobby-12
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby13
-      name: Lobby-13
-      serverName: Lobby-13
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby14
-      name: Lobby-14
-      serverName: Lobby-14
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby15
-      name: Lobby-15
-      serverName: Lobby-15
-      description: "Players: %playercount%\nStatus: %status%"
-    - id: lobby16
-      name: Lobby-16
-      serverName: Lobby-16
       description: "Players: %playercount%\nStatus: %status%"
 teleporter:
   inventoryRows: 5

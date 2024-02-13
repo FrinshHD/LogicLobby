@@ -2,7 +2,7 @@ package de.frinshhd.logiclobby.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.checkerframework.checker.units.qual.C;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,10 @@ public class Config {
 
     @JsonIgnore
     public boolean hasCloudNetSupportEnabled() {
+        if (!Bukkit.getPluginManager().isPluginEnabled("CloudNet-Bridge")) {
+            return false;
+        }
+
         return enableCloudNetSupport;
     }
 

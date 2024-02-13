@@ -1,6 +1,6 @@
 package de.frinshhd.logiclobby.utils;
 
-public enum LobbyStates {
+public enum LobbyState {
     NORMAL,
     EMPTY,
     UNREACHABLE,

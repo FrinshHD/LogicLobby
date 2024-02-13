@@ -1,7 +1,7 @@
 package de.frinshhd.logiclobby.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import de.frinshhd.logiclobby.utils.LobbyStates;
+import de.frinshhd.logiclobby.utils.LobbyState;
 import org.bukkit.Material;
 
 import java.util.HashMap;
@@ -12,18 +12,18 @@ public class LobbyItem {
     private HashMap<String, Item> types = null;
 
 
-    public HashMap<LobbyStates, Item> getTypes() {
-        HashMap<LobbyStates, Item> map = new HashMap<>();
+    public HashMap<LobbyState, Item> getTypes() {
+        HashMap<LobbyState, Item> map = new HashMap<>();
 
         types.forEach((s, item) -> {
-            map.put(LobbyStates.valueOf(s), item);
+            map.put(LobbyState.valueOf(s), item);
         });
 
         return map;
     }
 
 
-    public Material getMaterialState(LobbyStates lobbyState) {
+    public Material getMaterialState(LobbyState lobbyState) {
         return getTypes().get(lobbyState).getMaterial();
     }
 
