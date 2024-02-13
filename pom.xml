@@ -6,7 +6,7 @@
 
     <groupId>de.frinshhd</groupId>
     <artifactId>LogicLobby</artifactId>
-    <version>1.0.0-beta</version>
+    <version>1.0.1-beta</version>
     <packaging>jar</packaging>
 
     <name>LogicLobby</name>

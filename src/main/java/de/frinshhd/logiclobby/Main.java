@@ -65,7 +65,7 @@ public final class Main extends JavaPlugin {
 
 
         //Bstats
-        int pluginId = 20932;
+        int pluginId = 20990;
         Metrics metrics = new Metrics(this, pluginId);
 
         // Find plugin class names for dynamic loading
