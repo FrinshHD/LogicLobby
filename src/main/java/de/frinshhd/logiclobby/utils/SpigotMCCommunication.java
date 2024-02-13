@@ -37,7 +37,7 @@ public class SpigotMCCommunication {
 
     private static String getLatestReleaseVersion() throws IOException {
         //Todo: update plugin id
-        String apiUrl = "https://api.spiget.org/v2/resources/115058//updates/latest?size=1";
+        String apiUrl = "https://api.spiget.org/v2/resources/115058/updates/latest?size=1";
 
         URL url = new URL(apiUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
