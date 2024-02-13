@@ -24,5 +24,9 @@ LogicLobby comes with a comprehensive configuration system that allows server ow
 ### Ease of Use
 Designed with user-friendliness in mind, LogicLobby offers an intuitive interface for both administrators and players. Server owners can easily modify settings and manage lobby features through simple configuration file adjustments.
 
+### Screenshots
+![screenshot1](https://i.imgur.com/3EmtMc2.png)
+![screenshot2](https://i.imgur.com/8ML0hix.png)
+
 ### bStats
 ![bstats](https://bstats.org/signatures/bukkit/LogicLobby.svg)
