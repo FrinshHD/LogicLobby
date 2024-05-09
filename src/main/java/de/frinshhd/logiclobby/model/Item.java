@@ -58,7 +58,7 @@ public class Item {
 
         if (texture != null) {
             SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
-            skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.randomUUID()));
+            skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer("bbd0af50-1c26-4e4e-9171-615c844d4a87"));
             PlayerProfile playerProfile = skullMeta.getPlayerProfile();
             assert playerProfile != null;
             playerProfile.setProperty(new ProfileProperty("textures", texture));
