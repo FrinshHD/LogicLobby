@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -58,13 +59,16 @@ public class Item {
 
         if (texture != null) {
             SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
-            skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer("bbd0af50-1c26-4e4e-9171-615c844d4a87"));
-            PlayerProfile playerProfile = skullMeta.getPlayerProfile();
-            assert playerProfile != null;
-            playerProfile.setProperty(new ProfileProperty("textures", texture));
-            skullMeta.setPlayerProfile(playerProfile);
+            if (skullMeta != null) {
+                OfflinePlayer player = Bukkit.getOfflinePlayer("bbd0af50-1c26-4e4e-9171-615c844d4a87");
+                skullMeta.setOwningPlayer(player);
 
-            item.setItemMeta(skullMeta);
+                PlayerProfile playerProfile = Bukkit.createProfile(player.getUniqueId());
+                playerProfile.setProperty(new ProfileProperty("textures", texture));
+                skullMeta.setPlayerProfile(playerProfile);
+
+                item.setItemMeta(skullMeta);
+            }
         }
 
         if (leatherColor != null) {
