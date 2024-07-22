@@ -8,3 +8,15 @@ softdepend: [ SuperVanish, PremiumVanish, CloudNet-Bridge ]
 permissions:
   logiclobby.admin.updateNotify:
     default: op
+  logiclobby.admin.reload:
+    default: op
+    children:
+    - logiclobby.admin
+  logiclobby.admin:
+    default: op
+
+commands:
+  logiclobby:
+    description: "Main command for LogicLobby"
+    usage: "/logiclobby"
+    aliases: "ll"

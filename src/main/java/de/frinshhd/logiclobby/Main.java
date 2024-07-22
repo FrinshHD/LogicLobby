@@ -33,10 +33,22 @@ public final class Main extends JavaPlugin {
         return itemsManager;
     }
 
+    public static void reload() {
+        getManager().load();
+
+        // reload messages
+        try {
+            SpigotTranslator.register("plugins/LogicLobby/messages.properties");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     @Override
     public void onEnable() {
         instance = this;
-        Main.getInstance().getLogger().setLevel(Level.OFF);
+        Main.getInstance().getLogger().setLevel(Level.ALL);
 
         //create files
         new File("plugins/LogicLobby").mkdir();

@@ -25,14 +25,15 @@ public class DynamicCommands {
                     Class<CommandExecutor> commandExecutorClass = CommandExecutor.class;
 
                     if (commandExecutorClass.isAssignableFrom(cls)) {
-                        //Main.getInstance().getLogger().info("[DynamicCommands] Loading command in class " + className);
+                        Main.getInstance().getLogger().info("[DynamicCommands] Loading command in class " + className);
 
                         Constructor<?> constructor = cls.getConstructors()[0];
                         SpigotCommandExecutor commandExecutor = (SpigotCommandExecutor) constructor.newInstance();
 
                         Objects.requireNonNull(Bukkit.getPluginCommand(commandExecutor.getCommandName())).setExecutor(commandExecutor);
+                        Objects.requireNonNull(Bukkit.getPluginCommand(commandExecutor.getCommandName())).setTabCompleter(commandExecutor);
 
-                        //Main.getInstance().getLogger().info("[DynamicCommands] Finished loading command in class " + className);
+                        Main.getInstance().getLogger().info("[DynamicCommands] Finished loading command in class " + className);
 
                     }
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
