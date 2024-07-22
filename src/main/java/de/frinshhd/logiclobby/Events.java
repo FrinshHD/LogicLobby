@@ -25,6 +25,8 @@ public class Events implements Listener {
 
             case VOID:
                 event.getEntity().teleport(Main.getManager().getConfig().getSpawn().getLocation());
+                event.setDamage(0);
+                event.getEntity().setFallDistance(0);
                 break;
         }
     }
