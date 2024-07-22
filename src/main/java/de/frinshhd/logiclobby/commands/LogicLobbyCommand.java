@@ -52,7 +52,8 @@ public class LogicLobbyCommand extends SpigotCommandExecutor {
         if (args.length <= 1) {
 
             List<String> possibleArguments = new ArrayList<>(List.of(
-                    "reload"
+                    "reload",
+                    "version"
             ));
 
             possibleArguments.forEach(possibleArgument -> {
