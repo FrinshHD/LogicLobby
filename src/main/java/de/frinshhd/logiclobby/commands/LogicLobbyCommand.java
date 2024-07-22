@@ -26,12 +26,19 @@ public class LogicLobbyCommand extends SpigotCommandExecutor {
 
         switch (args[0]) {
             case "reload":
-                if (!sender.hasPermission("logiclobby.reload")) {
-                    return false;
+                if (!sender.hasPermission("logiclobby.admin.reload")) {
+                    return true;
                 }
 
                 Main.reload();
                 sender.sendMessage("§aLogicLobby successfully reloaded.");
+                return true;
+            case "version":
+                if (!sender.hasPermission("logiclobby.admin.version")) {
+                    return true;
+                }
+
+                sender.sendMessage("§aLogicLobby version: " + Main.getInstance().getDescription().getVersion());
                 return true;
             default:
                 return true;

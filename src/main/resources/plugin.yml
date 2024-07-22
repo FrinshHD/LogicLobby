@@ -12,6 +12,10 @@ permissions:
     default: op
     children:
     - logiclobby.admin
+  logiclobby.admin.version:
+    default: op
+    children:
+      - logiclobby.admin
   logiclobby.admin:
     default: op
 
