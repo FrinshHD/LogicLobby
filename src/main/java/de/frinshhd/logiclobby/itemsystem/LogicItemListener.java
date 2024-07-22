@@ -194,13 +194,4 @@ public class LogicItemListener implements Listener {
             return;
         }
     }
-
-    @EventHandler
-    public void onPlayerHunger(FoodLevelChangeEvent event){
-        if (!(event.getEntity() instanceof Player)) {
-            return;
-        }
-
-        event.setCancelled(true);
-    }
 }
