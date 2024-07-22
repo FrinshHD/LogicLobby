@@ -9,17 +9,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByBlockEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ListIterator;
 
 public class LogicItemListener implements Listener {
 
@@ -197,5 +193,14 @@ public class LogicItemListener implements Listener {
             event.setCancelled(true);
             return;
         }
+    }
+
+    @EventHandler
+    public void onPlayerHunger(FoodLevelChangeEvent event){
+        if (!(event.getEntity() instanceof Player)) {
+            return;
+        }
+
+        event.setCancelled(true);
     }
 }
