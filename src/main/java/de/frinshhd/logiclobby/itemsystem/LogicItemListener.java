@@ -154,15 +154,4 @@ public class LogicItemListener implements Listener {
             event.getDrops().remove(item);
         }
     }
-
-    @EventHandler
-    public void onBlockDamage(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player)) {
-            return;
-        }
-
-        if (event.getCause().equals(EntityDamageEvent.DamageCause.SUFFOCATION)) {
-            event.setCancelled(true);
-        }
-    }
 }
