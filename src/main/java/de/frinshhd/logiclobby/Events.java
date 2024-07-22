@@ -21,6 +21,11 @@ public class Events implements Listener {
                  ENTITY_ATTACK,
                  ENTITY_EXPLOSION:
                 event.setCancelled(true);
+                break;
+
+            case VOID:
+                event.getEntity().teleport(Main.getManager().getConfig().getSpawn().getLocation());
+                break;
         }
     }
 
@@ -32,5 +37,4 @@ public class Events implements Listener {
 
         event.setCancelled(true);
     }
-
 }
