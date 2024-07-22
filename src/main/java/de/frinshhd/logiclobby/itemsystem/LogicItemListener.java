@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ListIterator;
@@ -152,6 +153,49 @@ public class LogicItemListener implements Listener {
             // Drop the item
             event.getItemsToKeep().add(item);
             event.getDrops().remove(item);
+        }
+    }
+
+    @EventHandler
+    public void onItemOffHandSwitch(PlayerSwapHandItemsEvent event) {
+        if (event.getMainHandItem() == null && event.getOffHandItem() == null) {
+            return;
+        }
+
+        if (event.getMainHandItem().getItemMeta() == null && event.getOffHandItem().getItemMeta() == null) {
+            return;
+        }
+
+        if (event.getMainHandItem() != null && event.getMainHandItem().getItemMeta() != null) {
+            String itemIdMain = ItemTags.extractItemId(event.getMainHandItem().getItemMeta());
+
+            if (itemIdMain == null) {
+                return;
+            }
+
+            // Check if the item is a clickItem
+            if (!Main.getItemManager().getItems().containsKey(itemIdMain)) {
+                return;
+            }
+
+            event.setCancelled(true);
+            return;
+        }
+
+        if (event.getOffHandItem() != null && event.getOffHandItem().getItemMeta() != null) {
+            String itemIdOff = ItemTags.extractItemId(event.getOffHandItem().getItemMeta());
+
+            if (itemIdOff == null) {
+                return;
+            }
+
+            // Check if the item is a clickItem
+            if (!Main.getItemManager().getItems().containsKey(itemIdOff)) {
+                return;
+            }
+
+            event.setCancelled(true);
+            return;
         }
     }
 }
