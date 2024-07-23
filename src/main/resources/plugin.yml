@@ -22,6 +22,8 @@ permissions:
     default: op
   logiclobby.command.fly.others:
     default: op
+  logiclobby.command.spawn:
+    default: true
 
 commands:
   logiclobby:
@@ -31,3 +33,6 @@ commands:
   fly:
     description: "Toggle fly mode"
     usage: "/fly"
+  spawn:
+    description: "Teleport to the spawn"
+    usage: "/spawn"
