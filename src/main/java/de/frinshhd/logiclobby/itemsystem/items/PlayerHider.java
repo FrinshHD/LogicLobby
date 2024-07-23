@@ -92,4 +92,25 @@ public class PlayerHider {
         return !playersPlayerHider.get(player.getUniqueId());
     }
 
+    public void onPlayerJoin(Player player) {
+        PlayerHider.getPlayerHider().setItemPlayer(player);
+
+        if (hasPlayersHidden(player)) {
+            Bukkit.getOnlinePlayers().forEach(players -> {
+                if (players.equals(player)) {
+                    return;
+                }
+
+                player.hidePlayer(Main.getInstance(), players);
+            });
+        } else {
+            Bukkit.getOnlinePlayers().forEach(players -> {
+                if (players.equals(player)) {
+                    return;
+                }
+
+                player.showPlayer(Main.getInstance(), players);
+            });
+        }
+    }
 }

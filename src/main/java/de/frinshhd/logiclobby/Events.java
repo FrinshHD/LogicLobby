@@ -19,7 +19,8 @@ public class Events implements Listener {
                  FALL,
                  FIRE,
                  ENTITY_ATTACK,
-                 ENTITY_EXPLOSION:
+                 ENTITY_EXPLOSION,
+                 PROJECTILE:
                 event.setCancelled(true);
                 break;
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import de.frinshhd.logiclobby.itemsystem.items.PlayerHider;
 import de.frinshhd.logiclobby.model.Config;
 import de.frinshhd.logiclobby.mysql.MysqlManager;
 import de.frinshhd.logiclobby.utils.SpigotMCCommunication;
@@ -183,7 +184,7 @@ public class Manager implements PluginMessageListener, Listener {
             }
         }
 
-
+        PlayerHider.getPlayerHider().onPlayerJoin(player);
     }
 
     @EventHandler

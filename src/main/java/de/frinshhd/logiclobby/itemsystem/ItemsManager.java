@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class ItemsManager implements Listener {
 
@@ -40,13 +41,15 @@ public class ItemsManager implements Listener {
         {
             boolean bool = true;
 
-            if (MysqlManager.getItemsPlayer(player.getUniqueId()).getItems().get("playerhider") != null) {
-                bool = (boolean) MysqlManager.getItemsPlayer(player.getUniqueId()).getItems().get("playerhider");
+            if (MysqlManager.getItemsPlayer(player.getUniqueId()) == null) {
+                return;
+            }
+
+            if (Objects.requireNonNull(MysqlManager.getItemsPlayer(player.getUniqueId())).getItems().get("playerhider") != null) {
+                bool = (boolean) Objects.requireNonNull(MysqlManager.getItemsPlayer(player.getUniqueId())).getItems().get("playerhider");
             }
 
             PlayerHider.getPlayerHider().playersPlayerHider.put(player.getUniqueId(), bool);
-
-            PlayerHider.getPlayerHider().setItemPlayer(player);
         }
     }
 
