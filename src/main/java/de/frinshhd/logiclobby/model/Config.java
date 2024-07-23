@@ -20,6 +20,8 @@ public class Config {
     private boolean enableCloudNetSupport = false;
     @JsonProperty
     private int defaultHotbarSlot = -1;
+    @JsonProperty
+    public Database database = new Database();
 
     @JsonProperty
     private Spawn spawn = null;
@@ -43,6 +45,16 @@ public class Config {
 
     public List<ClickItem> getItems() {
         return this.items;
+    }
+
+    public ClickItem getClickItem(String id) {
+        for (ClickItem item : getItems()) {
+            if (item.getId().equalsIgnoreCase(id)) {
+                return item;
+            }
+        }
+
+        return null;
     }
 
     public int getDefaultHotbarSlot() {

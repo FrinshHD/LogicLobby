@@ -17,6 +17,13 @@ items:
     material: NETHER_STAR
     slot: 5
     menu: LOBBYSWITCHER
+  - id: playerhider
+    friendlyName: "&2Player-Hider"
+    material: LIME_DYE
+    slot: 8
+    type: PLAYER_HIDER
+    toggledMaterial: RED_DYE
+
 lobbySwitcher:
   inventoryRows: 4
   fillerItem:

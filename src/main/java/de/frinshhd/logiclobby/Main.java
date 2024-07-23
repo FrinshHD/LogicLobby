@@ -70,8 +70,9 @@ public final class Main extends JavaPlugin {
             }
         }
 
-        itemsManager = new ItemsManager();
+        itemsManager = new ItemsManager(true);
         manager = new Manager(true);
+        manager.connectToDB();
 
         SpigotMCCommunication.init();
 

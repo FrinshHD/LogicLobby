@@ -6,6 +6,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import de.frinshhd.logiclobby.model.Config;
+import de.frinshhd.logiclobby.mysql.MysqlManager;
 import de.frinshhd.logiclobby.utils.SpigotMCCommunication;
 import de.frinshhd.logiclobby.utils.SpigotTranslator;
 import de.frinshhd.logiclobby.utils.TranslatorPlaceholder;
@@ -74,6 +75,20 @@ public class Manager implements PluginMessageListener, Listener {
             config = mapper.readValue(new FileInputStream("plugins/LogicLobby/config.yml"), Config.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void connectToDB() {
+        switch (getConfig().database.getType()) {
+            case MYSQL:
+                MysqlManager.connect("jdbc:mysql://" + getConfig().database.ip + ":" + getConfig().database.port + "/" + getConfig().database.database, getConfig().database.username, this.config.database.password);
+                break;
+            case SQLITE:
+                MysqlManager.connect("jdbc:sqlite:plugins/LogicLobby/sqlite.db");
+                break;
+            case MONGODB:
+                break;
+            default:
         }
     }
 
