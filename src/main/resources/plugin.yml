@@ -24,6 +24,8 @@ permissions:
     default: op
   logiclobby.command.spawn:
     default: true
+  logiclobby.admin.build:
+    default: op
 
 commands:
   logiclobby:

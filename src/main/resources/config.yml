@@ -101,3 +101,15 @@ teleporter:
         material: BEACON
         slot: 44
       location: [ 0,80,0 ]
+events:
+  noDamage: true
+  noHunger: true
+  noBlockBreak: true
+  noBlockPlace: true
+  noItemDrop: true
+  noItemPickup: true
+  noItemCraft: true
+  noItemConsume: true
+  noEntityDamage: true
+  noEntitySpawn: true
+  lowestY: -70

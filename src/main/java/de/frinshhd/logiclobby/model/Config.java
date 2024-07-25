@@ -26,6 +26,9 @@ public class Config {
     @JsonProperty
     private Spawn spawn = null;
 
+    @JsonProperty
+    private Events events = new Events();
+
     @JsonIgnore
     public boolean hasCloudNetSupportEnabled() {
         if (!Bukkit.getPluginManager().isPluginEnabled("CloudNet-Bridge")) {
@@ -63,5 +66,9 @@ public class Config {
 
     public Spawn getSpawn() {
         return this.spawn;
+    }
+
+    public Events getEvents() {
+        return this.events;
     }
 }

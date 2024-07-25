@@ -1,10 +1,22 @@
 package de.frinshhd.logiclobby;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.inventory.ItemStack;
+
+import static de.frinshhd.logiclobby.Main.getManager;
 
 public class Events implements Listener {
 
@@ -14,21 +26,9 @@ public class Events implements Listener {
             return;
         }
 
-        switch (event.getCause()) {
-            case SUFFOCATION,
-                 FALL,
-                 FIRE,
-                 ENTITY_ATTACK,
-                 ENTITY_EXPLOSION,
-                 PROJECTILE:
-                event.setCancelled(true);
-                break;
-
-            case VOID:
-                event.getEntity().teleport(Main.getManager().getConfig().getSpawn().getLocation());
-                event.setDamage(0);
-                event.getEntity().setFallDistance(0);
-                break;
+        if (getManager().getConfig().getEvents().isNoDamage()) {
+            event.setCancelled(true);
+            return;
         }
     }
 
@@ -38,6 +38,87 @@ public class Events implements Listener {
             return;
         }
 
-        event.setCancelled(true);
+        if (getManager().getConfig().getEvents().isNoHunger()) {
+            event.setCancelled(true);
+            return;
+        }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        if (getManager().getConfig().getEvents().isNoBlockBreak() && !event.getPlayer().hasPermission("logiclobby.admin.build")) {
+            event.setCancelled(true);
+            return;
+        }
+    }
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent event) {
+        if (getManager().getConfig().getEvents().isNoBlockPlace() && !event.getPlayer().hasPermission("logiclobby.admin.build")) {
+            event.setCancelled(true);
+            return;
+        }
+    }
+
+    @EventHandler
+    public void onItemDrop(PlayerDropItemEvent event) {
+        if (getManager().getConfig().getEvents().isNoItemDrop() && !event.getPlayer().hasPermission("logiclobby.admin.build")) {
+            event.setCancelled(true);
+            return;
+        }
+    }
+
+    @EventHandler
+    public void onItemPickup(EntityPickupItemEvent event) {
+        if (!(event.getEntity() instanceof Player player)) {
+            return;
+        }
+
+        if (getManager().getConfig().getEvents().isNoItemPickup() && !player.hasPermission("logiclobby.admin.build")) {
+            event.setCancelled(true);
+            return;
+        }
+    }
+
+    @EventHandler
+    public void onItemCraft(PrepareItemCraftEvent event) {
+        event.getViewers().forEach(player -> {
+            if (getManager().getConfig().getEvents().isNoItemCraft() && !player.hasPermission("logiclobby.admin.build")) {
+                event.getInventory().setResult(new ItemStack(Material.AIR));
+            }
+        });
+    }
+
+    @EventHandler
+    public void onItemConsume(PlayerItemConsumeEvent event) {
+        if (getManager().getConfig().getEvents().isNoItemConsume() && !event.getPlayer().hasPermission("logiclobby.admin.build")) {
+            event.setCancelled(true);
+            return;
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent event) {
+        if (getManager().getConfig().getEvents().isNoEntityDamage()) {
+            event.setCancelled(true);
+            return;
+        }
+    }
+
+    @EventHandler
+    public void onEntitySpawn(EntitySpawnEvent event) {
+        if (getManager().getConfig().getEvents().isNoEntitySpawn()) {
+            event.setCancelled(true);
+            return;
+        }
+    }
+
+    @EventHandler
+    public void onUnderLowestY(PlayerMoveEvent event) {
+        if (getManager().getConfig().getEvents().getLowestY() != null && event.getPlayer().getLocation().getY() < getManager().getConfig().getEvents().getLowestY()) {
+            event.getPlayer().setFallDistance(0);
+            event.getPlayer().teleport(event.getPlayer().getWorld().getSpawnLocation());
+            return;
+        }
     }
 }
