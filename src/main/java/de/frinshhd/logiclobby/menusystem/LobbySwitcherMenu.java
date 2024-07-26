@@ -137,6 +137,12 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
                             Server lobbyServer = config.getLobbySwitcher().getLobbyServers().get(currentSlot);
                             // Filling the field with the custom block
 
+                            int slot = i;
+
+                            if (lobbyServer.getSlot() != null && lobbyServer.getSlot() >= 0 && lobbyServer.getSlot() < getSlots()) {
+                                slot = lobbyServer.getSlot();
+                            }
+
                             getCount(player, lobbyServer.getServerName());
 
                             ItemStack item = lobbyServer.getItem(config.getLobbySwitcher().getLobbyItem().getMaterialState(LobbyState.UNREACHABLE));
@@ -149,8 +155,8 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
 
                             item.setItemMeta(itemMeta);
 
-                            inventory.setItem(i, item);
-                            items.put(lobbyServer.getServerName(), new SavedItem(i, item, lobbyServer, lobbyServer.getDescription()));
+                            inventory.setItem(slot, item);
+                            items.put(lobbyServer.getServerName(), new SavedItem(slot, item, lobbyServer, lobbyServer.getDescription()));
 
                             currentSlot++; // Move to the next custom block in the list
                         } else {

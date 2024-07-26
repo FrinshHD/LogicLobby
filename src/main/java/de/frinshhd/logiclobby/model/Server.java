@@ -39,6 +39,8 @@ public class Server {
     private Float yaw = null;
     @JsonProperty
     private Float pitch = null;
+    @JsonProperty
+    private Integer itemSlot = null;
 
     @JsonProperty
     private String task = null;
@@ -76,6 +78,10 @@ public class Server {
     }
 
     public int getItemSlot() {
+        if (this.item.getSlot() > -1 && this.itemSlot != null) {
+            return this.itemSlot;
+        }
+
         return this.item.getSlot();
     }
 
