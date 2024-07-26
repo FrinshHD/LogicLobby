@@ -39,8 +39,6 @@ public class Server {
     private Float yaw = null;
     @JsonProperty
     private Float pitch = null;
-    @JsonProperty
-    private Integer itemSlot = null;
 
     @JsonProperty
     private String task = null;
@@ -62,6 +60,10 @@ public class Server {
 
     @JsonIgnore
     public ItemStack getItem(String tagID, Material material) {
+        if (this.item.getMaterial() != null) {
+            material = this.item.getMaterial();
+        }
+
         ItemStack item = this.item.getItem(material);
 
         ItemMeta itemMeta = item.getItemMeta();
@@ -78,10 +80,6 @@ public class Server {
     }
 
     public int getItemSlot() {
-        if (this.item.getSlot() <= -1 && this.itemSlot != null) {
-            return this.itemSlot;
-        }
-
         return this.item.getSlot();
     }
 
