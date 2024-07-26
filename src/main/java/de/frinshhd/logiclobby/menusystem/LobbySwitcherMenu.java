@@ -139,8 +139,8 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
 
                             int slot = i;
 
-                            if (lobbyServer.getSlot() != null && lobbyServer.getSlot() >= 0 && lobbyServer.getSlot() < getSlots()) {
-                                slot = lobbyServer.getSlot();
+                            if (lobbyServer.getItemSlot() >= 0 && lobbyServer.getItemSlot() < getSlots()) {
+                                slot = lobbyServer.getItemSlot();
                             }
 
                             getCount(player, lobbyServer.getServerName());

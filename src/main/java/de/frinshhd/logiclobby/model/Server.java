@@ -78,7 +78,7 @@ public class Server {
     }
 
     public int getItemSlot() {
-        if (this.item.getSlot() > -1 && this.itemSlot != null) {
+        if (this.item.getSlot() <= -1 && this.itemSlot != null) {
             return this.itemSlot;
         }
 
