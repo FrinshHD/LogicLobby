@@ -103,6 +103,10 @@ public class LogicItemListener implements Listener {
             return;
         }
 
+        if (event.getCurrentItem() == null) {
+            return;
+        }
+
         if (event.getCurrentItem().getItemMeta() == null) {
             return;
         }
