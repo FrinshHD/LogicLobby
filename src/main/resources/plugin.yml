@@ -26,6 +26,8 @@ permissions:
     default: true
   logiclobby.admin.build:
     default: op
+  logiclobby.command.lobbyswitcher:
+    default: true
 
 commands:
   logiclobby:
@@ -38,3 +40,6 @@ commands:
   spawn:
     description: "Teleport to the spawn"
     usage: "/spawn"
+  lobbyswitcher:
+    description: "Open the lobby switcher"
+    usage: "/lobbyswitcher"
