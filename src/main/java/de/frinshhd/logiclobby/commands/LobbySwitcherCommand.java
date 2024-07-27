@@ -17,7 +17,7 @@ import java.util.List;
 
 public class LobbySwitcherCommand extends SpigotCommandExecutor {
     public LobbySwitcherCommand() {
-        super("spawn");
+        super("lobbyswitcher");
     }
 
     @Override
