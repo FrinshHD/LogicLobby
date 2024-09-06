@@ -6,6 +6,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import de.frinshhd.logiclobby.itemsystem.items.PlayerHider;
+import de.frinshhd.logiclobby.itemsystem.items.TeleportBow;
 import de.frinshhd.logiclobby.model.Config;
 import de.frinshhd.logiclobby.mysql.MysqlManager;
 import de.frinshhd.logiclobby.utils.SpigotMCCommunication;
@@ -20,6 +21,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -63,6 +65,9 @@ public class Manager implements PluginMessageListener, Listener {
 
         config.getItems().forEach(item -> {
             Main.getItemManager().addItem(item);
+            item.getItems().forEach(item1 -> {
+                Main.getItemManager().addItem(item1);
+            });
         });
     }
 
@@ -186,6 +191,7 @@ public class Manager implements PluginMessageListener, Listener {
         }
 
         PlayerHider.getPlayerHider().onPlayerJoin(player);
+        TeleportBow.getTeleportBow().onPlayerJoin(player);
     }
 
     @EventHandler

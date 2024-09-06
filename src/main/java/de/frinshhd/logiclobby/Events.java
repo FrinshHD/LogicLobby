@@ -121,4 +121,13 @@ public class Events implements Listener {
             return;
         }
     }
+
+    @EventHandler
+    public void onArrowPickup(PlayerPickupArrowEvent event) {
+        if (!event.getPlayer().hasPermission("logiclobby.admin.build")) {
+            event.setCancelled(true);
+            event.getArrow().remove();
+            return;
+        }
+    }
 }

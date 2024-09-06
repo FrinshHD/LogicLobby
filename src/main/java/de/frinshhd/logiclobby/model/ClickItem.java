@@ -3,14 +3,18 @@ package de.frinshhd.logiclobby.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import de.frinshhd.logiclobby.itemsystem.items.PlayerHider;
+import de.frinshhd.logiclobby.itemsystem.items.TeleportBow;
 import de.frinshhd.logiclobby.menusystem.LobbySwitcherMenu;
 import de.frinshhd.logiclobby.menusystem.TeleporterMenu;
 import de.frinshhd.logiclobby.utils.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
 
 public class ClickItem extends Item {
 
@@ -30,6 +34,9 @@ public class ClickItem extends Item {
     private String menu = null;
 
     @JsonProperty
+    private ArrayList<ClickItem> items = new ArrayList<>();
+
+    @JsonProperty
     private String toggledMaterial = null;
 
     public String getDescription() {
@@ -45,6 +52,10 @@ public class ClickItem extends Item {
     }
 
     public MenuTypes getMenu() {
+        if (menu == null) {
+            return MenuTypes.NONE;
+        }
+
         return MenuTypes.valueOf(this.menu);
     }
 
@@ -101,12 +112,18 @@ public class ClickItem extends Item {
                         new LobbySwitcherMenu(player).open();
                         break;
                     default:
+                        break;
                 }
                 break;
             case PLAYER_HIDER:
                 PlayerHider.getPlayerHider().toggle(player);
                 break;
             default:
+                break;
         }
+    }
+
+    public ArrayList<ClickItem> getItems() {
+        return items;
     }
 }

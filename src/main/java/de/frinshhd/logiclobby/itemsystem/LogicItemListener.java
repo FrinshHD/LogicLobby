@@ -1,14 +1,17 @@
 package de.frinshhd.logiclobby.itemsystem;
 
 import de.frinshhd.logiclobby.Main;
+import de.frinshhd.logiclobby.itemsystem.items.TeleportBow;
 import de.frinshhd.logiclobby.utils.ItemTags;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -16,6 +19,8 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Objects;
 
 public class LogicItemListener implements Listener {
 
@@ -75,25 +80,21 @@ public class LogicItemListener implements Listener {
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
         if (event.getItemDrop().getItemStack().getItemMeta() == null) {
-            System.out.println("1");
             return;
         }
 
         String itemId = ItemTags.extractItemId(event.getItemDrop().getItemStack().getItemMeta());
 
         if (itemId == null) {
-            System.out.println("2");
             return;
         }
 
         // Check if the item is a clickItem
         if (!Main.getItemManager().getItems().containsKey(itemId)) {
-            System.out.println("3");
             return;
         }
 
         // Deny the player dropping the block
-        System.out.println("4");
         event.setCancelled(true);
     }
 
@@ -197,5 +198,25 @@ public class LogicItemListener implements Listener {
             event.setCancelled(true);
             return;
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onEntitySpawn(EntitySpawnEvent event) {
+
+        if (!(event.getEntity() instanceof Arrow arrow)) return;
+
+        if (arrow.getShooter() == null) return;
+
+        Player player = arrow.getShooter() instanceof Player ? (Player) arrow.getShooter() : null;
+
+        if (player == null) return;
+
+        if (player.getInventory().getItemInMainHand().getItemMeta() == null) return;
+
+        String itemId = ItemTags.extractItemId(player.getInventory().getItemInMainHand().getItemMeta());
+
+        if (itemId == null) return;
+
+        if (itemId.equals("teleportbow")) TeleportBow.getTeleportBow().onBowSpawn(event);
     }
 }

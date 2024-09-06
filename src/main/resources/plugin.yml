@@ -25,7 +25,7 @@ permissions:
   logiclobby.command.spawn:
     default: true
   logiclobby.admin.build:
-    default: op
+    default: false
   logiclobby.command.lobbyswitcher:
     default: true
 

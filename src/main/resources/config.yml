@@ -17,6 +17,15 @@ items:
     material: NETHER_STAR
     slot: 5
     menu: LOBBYSWITCHER
+  - id: teleportbow
+    friendlyName: "&2Teleport-Bow"
+    material: BOW
+    slot: 6
+    type: TELEPORT_BOW
+    items:
+      - id: teleportArrow
+        material: ARROW
+        slot: 17
   - id: playerhider
     friendlyName: "&2Player-Hider"
     material: LIME_DYE
@@ -113,3 +122,10 @@ events:
   noEntityDamage: true
   noEntitySpawn: true
   lowestY: -70
+database:
+  type: "sqlite"
+  host: "localhost"
+  port: "3306"
+  database: "logiclobby"
+  username: "root"
+  password: "12345"
