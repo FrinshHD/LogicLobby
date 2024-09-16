@@ -28,6 +28,8 @@ permissions:
     default: false
   logiclobby.command.lobbyswitcher:
     default: true
+  logiclobby.gadget.teleportBow:
+    default: op
 
 commands:
   logiclobby:

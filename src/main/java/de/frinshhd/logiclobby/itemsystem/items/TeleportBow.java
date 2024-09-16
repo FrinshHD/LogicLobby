@@ -35,6 +35,10 @@ public class TeleportBow implements Listener {
     private PlayerHashMap<UUID, UUID> playerArrow = new PlayerHashMap<>();
 
     public void setItemPlayer(Player player) {
+        if (!player.hasPermission("logiclobby.gadget.teleportBow")) {
+            return;
+        }
+
         ClickItem teleportBow = Main.getManager().getConfig().getClickItem("teleportbow");
 
         if (teleportBow == null) {
