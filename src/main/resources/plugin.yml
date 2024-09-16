@@ -11,7 +11,7 @@ permissions:
   logiclobby.admin.reload:
     default: op
     children:
-    - logiclobby.admin
+      - logiclobby.admin
   logiclobby.admin.version:
     default: op
     children:

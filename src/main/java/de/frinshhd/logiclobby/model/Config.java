@@ -10,19 +10,17 @@ import java.util.List;
 public class Config {
 
     @JsonProperty
+    public Database database = new Database();
+    @JsonProperty
     private LobbySwitcher lobbySwitcher = null;
     @JsonProperty
     private Teleporter teleporter = new Teleporter();
-
     @JsonProperty
     private List<ClickItem> items = new ArrayList<>();
     @JsonProperty
     private boolean enableCloudNetSupport = false;
     @JsonProperty
     private int defaultHotbarSlot = -1;
-    @JsonProperty
-    public Database database = new Database();
-
     @JsonProperty
     private Spawn spawn = null;
 

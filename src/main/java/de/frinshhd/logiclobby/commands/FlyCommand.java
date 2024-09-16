@@ -1,7 +1,10 @@
 package de.frinshhd.logiclobby.commands;
 
 import de.frinshhd.logiclobby.Main;
-import de.frinshhd.logiclobby.utils.*;
+import de.frinshhd.logiclobby.utils.ChatManager;
+import de.frinshhd.logiclobby.utils.SpigotCommandExecutor;
+import de.frinshhd.logiclobby.utils.SpigotTranslator;
+import de.frinshhd.logiclobby.utils.TranslatorPlaceholder;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 public class FlyCommand extends SpigotCommandExecutor {
@@ -33,7 +35,7 @@ public class FlyCommand extends SpigotCommandExecutor {
                 //toggle player's flight mode
                 if (!player.getAllowFlight()) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 15, 0, false, false));
-                    new BukkitRunnable(){
+                    new BukkitRunnable() {
 
                         @Override
                         public void run() {
@@ -49,7 +51,7 @@ public class FlyCommand extends SpigotCommandExecutor {
 
                     ChatManager.sendMessage(sender, SpigotTranslator.build("command.fly.enable"));
                     return true;
-                } else if (player.getAllowFlight()){
+                } else if (player.getAllowFlight()) {
                     player.setAllowFlight(false);
                     player.setFlying(false);
 
@@ -74,7 +76,7 @@ public class FlyCommand extends SpigotCommandExecutor {
         if (player.hasPermission("logiclobby.command.fly.others")) {
             if (!target.getAllowFlight()) {
                 target.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 15, 0, false, false));
-                new BukkitRunnable(){
+                new BukkitRunnable() {
 
                     @Override
                     public void run() {
@@ -90,7 +92,7 @@ public class FlyCommand extends SpigotCommandExecutor {
 
                 ChatManager.sendMessage(sender, SpigotTranslator.build("command.fly.enable.other", new TranslatorPlaceholder("player", target.getName())));
                 return true;
-            } else if (target.getAllowFlight()){
+            } else if (target.getAllowFlight()) {
                 target.setAllowFlight(false);
                 target.setFlying(false);
 

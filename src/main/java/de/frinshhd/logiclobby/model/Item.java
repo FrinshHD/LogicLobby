@@ -16,8 +16,6 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.UUID;
-
 public class Item {
     @JsonProperty
     private Boolean glowing = false;

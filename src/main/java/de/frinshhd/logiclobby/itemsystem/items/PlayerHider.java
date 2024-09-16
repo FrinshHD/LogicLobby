@@ -7,21 +7,18 @@ import de.frinshhd.logiclobby.utils.PlayerHashMap;
 import de.frinshhd.logiclobby.utils.SpigotTranslator;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.json.JSONObject;
 
 import java.util.UUID;
 
 public class PlayerHider {
 
     private static final PlayerHider playerHider = new PlayerHider();
+    //hidden = false; shown = true
+    public PlayerHashMap<UUID, Boolean> playersPlayerHider = new PlayerHashMap<>();
 
     public static PlayerHider getPlayerHider() {
         return playerHider;
     }
-
-    //hidden = false; shown = true
-    public PlayerHashMap<UUID, Boolean> playersPlayerHider = new PlayerHashMap<>();
 
     public boolean toggle(Player player) {
         ClickItem playerHider = Main.getManager().getConfig().getClickItem("playerhider");

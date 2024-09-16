@@ -5,34 +5,29 @@ import de.frinshhd.logiclobby.model.ClickItem;
 import de.frinshhd.logiclobby.utils.PlayerHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
 public class TeleportBow implements Listener {
 
     private static final TeleportBow teleportBow = new TeleportBow(true);
-
-    public static TeleportBow getTeleportBow() {
-        return teleportBow;
-    }
+    // player, arrow
+    private PlayerHashMap<UUID, UUID> playerArrow = new PlayerHashMap<>();
 
     public TeleportBow(boolean notRegistered) {
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
     }
 
-
-    // player, arrow
-    private PlayerHashMap<UUID, UUID> playerArrow = new PlayerHashMap<>();
+    public static TeleportBow getTeleportBow() {
+        return teleportBow;
+    }
 
     public void setItemPlayer(Player player) {
         if (!player.hasPermission("logiclobby.gadget.teleportBow")) {
@@ -65,11 +60,9 @@ public class TeleportBow implements Listener {
 
         Arrow arrow = (Arrow) event.getEntity();
 
-        if (arrow.getShooter() == null || !(arrow.getShooter() instanceof Player)) {
+        if (arrow.getShooter() == null || !(arrow.getShooter() instanceof Player player)) {
             return;
         }
-
-        Player player = (Player) arrow.getShooter();
 
         playerArrow.put(player.getUniqueId(), arrow.getUniqueId());
         setPlayerArrow(player);

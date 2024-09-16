@@ -3,7 +3,6 @@ package de.frinshhd.logiclobby;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -12,8 +11,10 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.*;
-import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerPickupArrowEvent;
 import org.bukkit.inventory.ItemStack;
 
 import static de.frinshhd.logiclobby.Main.getManager;
@@ -33,7 +34,7 @@ public class Events implements Listener {
     }
 
     @EventHandler
-    public void onPlayerHunger(FoodLevelChangeEvent event){
+    public void onPlayerHunger(FoodLevelChangeEvent event) {
         if (!(event.getEntity() instanceof Player)) {
             return;
         }
