@@ -32,6 +32,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TeleporterMenu extends Menu implements PluginMessageListener {
 
@@ -46,27 +48,15 @@ public class TeleporterMenu extends Menu implements PluginMessageListener {
     }
 
     public static boolean isService(String input) {
-        // Check if the input string is not null and has at least 2 characters
-        if (input != null && input.length() >= 2) {
-            // Check if the last character is a hyphen
-            if (input.charAt(input.length() - 1) == '-') {
-                // Extract the substring excluding the hyphen
-                String numberPart = input.substring(0, input.length() - 1);
+        // Updated regex to match one or more letter segments followed by a hyphen and ending with a number
+        String regex = "^[A-Za-z]+(-[A-Za-z]+)*-[0-9]+$";
 
-                // Check if the remaining part is a positive number
-                try {
-                    int number = Integer.parseInt(numberPart);
-                    // Check if the number is positive
-                    if (number >= 0) {
-                        return true;
-                    }
-                } catch (NumberFormatException e) {
-                    // If parsing to integer fails, it means the remaining part is not a number
-                    return false;
-                }
-            }
-        }
-        return false;
+        // Compile the regex pattern
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+
+        // Return true if it matches, false otherwise
+        return matcher.matches();
     }
 
     @Override
