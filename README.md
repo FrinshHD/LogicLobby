@@ -6,6 +6,8 @@ LogicLobby is a versatile and customizable plugin designed to enhance the lobby 
 With a rich feature set and flexible configuration options, LogicLobby empowers server owners to create immersive and
 engaging lobby environments for their players.
 
+**Wiki**: https://logic.codearray.dev/docs/logiclobby.html
+
 **Key Features**
 
 1. **Teleporter Menu**
