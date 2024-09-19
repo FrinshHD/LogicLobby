@@ -1,6 +1,7 @@
 package de.frinshhd.logiclobby.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.bukkit.GameMode;
 
 public class Events {
 
@@ -32,6 +33,8 @@ public class Events {
     private boolean noEntitySpawn = true;
     @JsonProperty
     private Long lowestY = null;
+    @JsonProperty
+    private String joinGamemode = null;
 
     public boolean isNoDamage() {
         return noDamage;
@@ -87,6 +90,18 @@ public class Events {
 
     public Long getLowestY() {
         return lowestY;
+    }
+
+    public GameMode getJoinGamemode() {
+        if (joinGamemode == null) {
+            return null;
+        }
+
+        try {
+            return GameMode.valueOf(joinGamemode);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
 }

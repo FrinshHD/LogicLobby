@@ -122,6 +122,7 @@ events:
   noEntityDamage: true
   noEntitySpawn: true
   lowestY: -70
+  joinGamemode: ADVENTURE
 database:
   type: "sqlite"
   host: "localhost"

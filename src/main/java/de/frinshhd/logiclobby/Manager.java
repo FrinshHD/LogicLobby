@@ -180,6 +180,10 @@ public class Manager implements PluginMessageListener, Listener {
             player.teleport(config.getSpawn().getLocation());
         }
 
+        if (config.getEvents().getJoinGamemode() != null) {
+            player.setGameMode(config.getEvents().getJoinGamemode());
+        }
+
         //check for newer version
         if (player.hasPermission("logiclobby.admin.updateNotify") && Main.version != null) {
             if (!Main.version.equals(Main.getInstance().getDescription().getVersion())) {
