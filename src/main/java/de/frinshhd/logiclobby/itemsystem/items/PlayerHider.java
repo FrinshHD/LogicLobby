@@ -27,7 +27,7 @@ public class PlayerHider {
             save(player.getUniqueId(), true);
 
             //set item
-            setItemPlayer(player);
+            setItemPlayer(player, true);
 
             //show all players
             Bukkit.getOnlinePlayers().forEach(players -> {
@@ -45,7 +45,7 @@ public class PlayerHider {
             save(player.getUniqueId(), false);
 
             //set item
-            setItemPlayer(player);
+            setItemPlayer(player, true);
 
             //hide all players
             Bukkit.getOnlinePlayers().forEach(players -> {
@@ -62,7 +62,7 @@ public class PlayerHider {
         }
     }
 
-    public void setItemPlayer(Player player) {
+    public void setItemPlayer(Player player, boolean cooldown) {
         ClickItem playerHider = Main.getManager().getConfig().getClickItem("playerhider");
 
         if (playerHider == null) {
@@ -71,8 +71,16 @@ public class PlayerHider {
 
         if (hasPlayersHidden(player)) {
             player.getInventory().setItem(playerHider.getSlot(), playerHider.getItem(true));
+
+            if (cooldown) {
+                player.setCooldown(playerHider.getItem(true).getType(), 10);
+            }
         } else {
             player.getInventory().setItem(playerHider.getSlot(), playerHider.getItem(false));
+
+            if (cooldown) {
+                player.setCooldown(playerHider.getItem(false).getType(), 10);
+            }
         }
 
     }
@@ -90,7 +98,7 @@ public class PlayerHider {
     }
 
     public void onPlayerJoin(Player player) {
-        PlayerHider.getPlayerHider().setItemPlayer(player);
+        PlayerHider.getPlayerHider().setItemPlayer(player, false);
 
         if (hasPlayersHidden(player)) {
             Bukkit.getOnlinePlayers().forEach(players -> {

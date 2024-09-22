@@ -43,7 +43,6 @@ public class LogicItemListener implements Listener {
             return;
         }
 
-
         if (event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             // If player pressed left click
             Main.getItemManager().getItems().get(itemId).use(event.getPlayer());
