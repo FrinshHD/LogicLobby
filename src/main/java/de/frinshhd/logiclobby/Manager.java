@@ -92,6 +92,9 @@ public class Manager implements PluginMessageListener, Listener {
                 break;
             case MONGODB:
                 break;
+            case MARIADB:
+                MysqlManager.connect("jdbc:mariadb://" + getConfig().database.ip + ":" + getConfig().database.port + "/" + getConfig().database.database, getConfig().database.username, this.config.database.password);
+                break;
             default:
         }
     }

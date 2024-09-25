@@ -4,4 +4,5 @@ public enum DatabaseTypes {
     SQLITE,
     MYSQL,
     MONGODB,
+    MARIADB,
 }
