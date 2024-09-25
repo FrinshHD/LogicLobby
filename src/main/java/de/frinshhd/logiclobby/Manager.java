@@ -85,7 +85,7 @@ public class Manager implements PluginMessageListener, Listener {
     public void connectToDB() {
         switch (getConfig().database.getType()) {
             case MYSQL:
-                MysqlManager.connect("jdbc:mysql://" + getConfig().database.ip + ":" + getConfig().database.port + "/" + getConfig().database.database, getConfig().database.username, this.config.database.password);
+                MysqlManager.connect("jdbc:mysql://" + getConfig().database.host + ":" + getConfig().database.port + "/" + getConfig().database.database, getConfig().database.username, this.config.database.password);
                 break;
             case SQLITE:
                 MysqlManager.connect("jdbc:sqlite:plugins/LogicLobby/sqlite.db");
@@ -93,7 +93,7 @@ public class Manager implements PluginMessageListener, Listener {
             case MONGODB:
                 break;
             case MARIADB:
-                MysqlManager.connect("jdbc:mariadb://" + getConfig().database.ip + ":" + getConfig().database.port + "/" + getConfig().database.database, getConfig().database.username, this.config.database.password);
+                MysqlManager.connect("jdbc:mariadb://" + getConfig().database.host + ":" + getConfig().database.port + "/" + getConfig().database.database, getConfig().database.username, this.config.database.password);
                 break;
             default:
         }
