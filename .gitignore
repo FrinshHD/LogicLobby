@@ -115,3 +115,4 @@ run/
 /serverBungee/
 deploy.py
 /server/
+/mariadb/
