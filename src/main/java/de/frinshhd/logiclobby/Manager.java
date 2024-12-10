@@ -1,5 +1,6 @@
 package de.frinshhd.logiclobby;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.io.ByteArrayDataInput;
@@ -74,6 +75,7 @@ public class Manager implements PluginMessageListener, Listener {
 
     public void load() {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try {
             config = mapper.readValue(new FileInputStream("plugins/LogicLobby/config.yml"), Config.class);
