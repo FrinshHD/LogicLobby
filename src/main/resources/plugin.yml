@@ -45,3 +45,12 @@ commands:
   lobbyswitcher:
     description: "Open the lobby switcher"
     usage: "/lobbyswitcher"
+
+libraries:
+  - org.xerial:sqlite-jdbc:3.47.1.0
+  - com.fasterxml.jackson.core:jackson-core:2.18.1
+  - com.fasterxml.jackson.core:jackson-databind:2.18.1
+  - com.j256.ormlite:ormlite-jdbc:6.1
+  - org.json:json:20240303
+  - com.google.code.gson:gson:2.8.9
+  - org.javassist:javassist:3.28.0-GA
