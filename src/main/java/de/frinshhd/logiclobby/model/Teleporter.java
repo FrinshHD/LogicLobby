@@ -13,14 +13,14 @@ public class Teleporter {
     private FillerItem fillerItem;
 
     @JsonProperty
-    private List<Server> servers;
+    private List<ConfigServer> configServers;
 
     public int getInventorySlots() {
         return inventoryRows * 9;
     }
 
-    public List<Server> getServers() {
-        return this.servers;
+    public List<ConfigServer> getServers() {
+        return this.configServers;
     }
 
     public FillerItem getFillerItem() {

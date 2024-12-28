@@ -15,7 +15,7 @@ public class LobbySwitcher {
     private LobbyTask lobbyTask = null;
 
     @JsonProperty
-    private ArrayList<Server> lobbyServers = new ArrayList<>();
+    private ArrayList<ConfigServer> lobbyConfigServers = new ArrayList<>();
 
     @JsonProperty
     private int inventoryRows = 3;
@@ -24,8 +24,8 @@ public class LobbySwitcher {
         return inventoryRows * 9;
     }
 
-    public ArrayList<Server> getLobbyServers() {
-        return this.lobbyServers;
+    public ArrayList<ConfigServer> getLobbyServers() {
+        return this.lobbyConfigServers;
     }
 
     public FillerItem getFillerItem() {

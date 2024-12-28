@@ -17,7 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class Server {
+public class ConfigServer {
 
     @JsonIgnore
     public String message = null;

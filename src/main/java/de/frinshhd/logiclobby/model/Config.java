@@ -1,7 +1,9 @@
 package de.frinshhd.logiclobby.model;
 
+import app.simplecloud.controller.api.ControllerApi;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.frinshhd.logiclobby.utils.SimpleCloudWrapper;
 import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class Config {
     @JsonProperty
     private boolean enableCloudNetSupport = false;
     @JsonProperty
+    private boolean enableSimpleCloudSupport = false;
+    @JsonProperty
     private int defaultHotbarSlot = -1;
     @JsonProperty
     private Spawn spawn = null;
@@ -34,6 +38,20 @@ public class Config {
         }
 
         return enableCloudNetSupport;
+    }
+
+    @JsonIgnore
+    public boolean hasSimpleCloudSupportEnabled() {
+        ControllerApi.Future controllerApi = SimpleCloudWrapper.getControllerApi();
+
+        try {
+            controllerApi.getServers().getAllServers();
+        } catch (Exception e) {
+            return false;
+        }
+
+
+        return enableSimpleCloudSupport;
     }
 
     public LobbySwitcher getLobbySwitcher() {

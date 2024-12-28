@@ -111,9 +111,10 @@ buildNumber.properties
 
 # Common working directory
 run/
-./server
+./configServer
 /serverBungee/
 deploy.py
-/server/
+/configServer/
 /mariadb/
 /proxy/
+/server/
