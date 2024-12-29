@@ -232,24 +232,24 @@ public class TeleporterMenu extends Menu implements PluginMessageListener {
             }
         }
 
-        ConfigServer configServer = null;
+        ConfigServer server = null;
 
         for (ConfigServer servers : config.getTeleporter().getServers()) {
             if (servers.getId().equals(id)) {
-                configServer = servers;
+                server = servers;
                 break;
             }
         }
 
-        if (configServer == null) {
+        if (server == null) {
             return;
         }
 
         Sounds.itemClick(player);
 
-        configServer.execute(player);
-        if (configServer.getMessage() != null) {
-            player.sendMessage(MessageFormat.build(configServer.getMessage()));
+        server.execute(player);
+        if (server.getMessage() != null) {
+            player.sendMessage(MessageFormat.build(server.getMessage()));
         }
     }
 

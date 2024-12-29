@@ -2,8 +2,7 @@ package de.frinshhd.logiclobby.model;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -17,27 +16,25 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffectType;
 
 public class Item {
-    @JsonProperty
+    @SerializedName("glowing")
     private Boolean glowing = false;
-    @JsonProperty
+    @SerializedName("slot")
     private Integer slot = -1;
-    @JsonProperty
+    @SerializedName("material")
     private String material = null;
-    @JsonProperty
+    @SerializedName("potion")
     private String potion = null;
-    @JsonProperty
+    @SerializedName("texture")
     private String texture = null;
-    @JsonProperty
+    @SerializedName("leatherColor")
     private DyeColor leatherColor = null;
-    @JsonProperty
+    @SerializedName("amount")
     private int amount = 1;
 
-    @JsonIgnore
     public Material getMaterial() {
         return Material.getMaterial(material);
     }
 
-    @JsonIgnore
     public ItemStack getItem(Material material) {
         if (material == null) {
             material = this.getMaterial();
@@ -47,11 +44,8 @@ public class Item {
 
         if (potion != null) {
             PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
-
             potionMeta.setColor(PotionEffectType.getByName(potion).getColor());
-
             potionMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-
             item.setItemMeta(potionMeta);
         }
 
@@ -83,7 +77,6 @@ public class Item {
         return item;
     }
 
-    @JsonIgnore
     public ItemStack getItem() {
         return getItem(this.getMaterial());
     }

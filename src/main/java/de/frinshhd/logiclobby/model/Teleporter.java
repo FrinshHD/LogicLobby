@@ -1,26 +1,27 @@
 package de.frinshhd.logiclobby.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Teleporter {
 
-    @JsonProperty
+    @SerializedName("inventoryRows")
     private int inventoryRows = 6;
 
-    @JsonProperty
+    @SerializedName("fillerItem")
     private FillerItem fillerItem;
 
-    @JsonProperty
-    private List<ConfigServer> configServers;
+    @SerializedName("servers")
+    private List<ConfigServer> servers = new ArrayList<>();
 
     public int getInventorySlots() {
         return inventoryRows * 9;
     }
 
     public List<ConfigServer> getServers() {
-        return this.configServers;
+        return this.servers;
     }
 
     public FillerItem getFillerItem() {

@@ -1,12 +1,12 @@
 package de.frinshhd.logiclobby.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 public class LobbyItemTypes {
 
-    @JsonProperty
+    @SerializedName("type")
     private String type = null;
 
-    @JsonProperty
+    @SerializedName("item")
     private Item item = null;
 }

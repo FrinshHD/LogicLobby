@@ -1,8 +1,7 @@
 package de.frinshhd.logiclobby.model;
 
 import app.simplecloud.controller.api.ControllerApi;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import de.frinshhd.logiclobby.utils.SimpleCloudWrapper;
 import org.bukkit.Bukkit;
 
@@ -11,27 +10,25 @@ import java.util.List;
 
 public class Config {
 
-    @JsonProperty
+    @SerializedName("database")
     public Database database = new Database();
-    @JsonProperty
+    @SerializedName("lobbySwitcher")
     private LobbySwitcher lobbySwitcher = null;
-    @JsonProperty
+    @SerializedName("teleporter")
     private Teleporter teleporter = new Teleporter();
-    @JsonProperty
+    @SerializedName("items")
     private List<ClickItem> items = new ArrayList<>();
-    @JsonProperty
+    @SerializedName("enableCloudNetSupport")
     private boolean enableCloudNetSupport = false;
-    @JsonProperty
+    @SerializedName("enableSimpleCloudSupport")
     private boolean enableSimpleCloudSupport = false;
-    @JsonProperty
+    @SerializedName("defaultHotbarSlot")
     private int defaultHotbarSlot = -1;
-    @JsonProperty
+    @SerializedName("spawn")
     private Spawn spawn = null;
-
-    @JsonProperty
+    @SerializedName("events")
     private Events events = new Events();
 
-    @JsonIgnore
     public boolean hasCloudNetSupportEnabled() {
         if (!Bukkit.getPluginManager().isPluginEnabled("CloudNet-Bridge")) {
             return false;
@@ -40,7 +37,6 @@ public class Config {
         return enableCloudNetSupport;
     }
 
-    @JsonIgnore
     public boolean hasSimpleCloudSupportEnabled() {
         ControllerApi.Future controllerApi = SimpleCloudWrapper.getControllerApi();
 
@@ -49,7 +45,6 @@ public class Config {
         } catch (Exception e) {
             return false;
         }
-
 
         return enableSimpleCloudSupport;
     }

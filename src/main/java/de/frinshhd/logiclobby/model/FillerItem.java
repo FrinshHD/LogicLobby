@@ -1,15 +1,15 @@
 package de.frinshhd.logiclobby.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import de.frinshhd.logiclobby.utils.FillerType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class FillerItem {
 
-    @JsonProperty
+    @SerializedName("type")
     private String type = null;
-    @JsonProperty
+    @SerializedName("item")
     private Item item = null;
 
     public ItemStack getItem() {

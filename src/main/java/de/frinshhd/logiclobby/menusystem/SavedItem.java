@@ -7,13 +7,13 @@ public class SavedItem {
     private int slot;
     private ItemStack itemStack;
 
-    private ConfigServer configServer;
+    private ConfigServer server;
     private String lore;
 
-    public SavedItem(int slot, ItemStack itemStack, ConfigServer configServer, String lore) {
+    public SavedItem(int slot, ItemStack itemStack, ConfigServer server, String lore) {
         this.slot = slot;
         this.itemStack = itemStack;
-        this.configServer = configServer;
+        this.server = server;
         this.lore = lore;
     }
 
@@ -31,7 +31,7 @@ public class SavedItem {
     }
 
     public ConfigServer getServer() {
-        return this.configServer;
+        return this.server;
     }
 
     public String getLore() {

@@ -1,6 +1,6 @@
 package de.frinshhd.logiclobby.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -9,16 +9,16 @@ import java.util.List;
 
 public class Lobby {
 
-    @JsonProperty
+    @SerializedName("friendlyName")
     public String friendlyName;
 
-    @JsonProperty
+    @SerializedName("tasks")
     public List<String> tasks = new ArrayList<>();
-    @JsonProperty
+    @SerializedName("lobbyRadius")
     public Double lobbyRadius;
-    @JsonProperty
+    @SerializedName("facing")
     public Float facing = 0F;
-    @JsonProperty
+    @SerializedName("spawnLocation")
     private List<Double> spawnLocation;
 
     public Location getSpawnLocation() {

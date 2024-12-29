@@ -1,6 +1,6 @@
 package de.frinshhd.logiclobby.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import de.frinshhd.logiclobby.Main;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -9,17 +9,19 @@ import java.util.ArrayList;
 
 public class Spawn {
 
-    @JsonProperty
+    @SerializedName("teleportOnJoin")
     private boolean teleportOnJoin = true;
 
-    @JsonProperty
+    @SerializedName("location")
     private ArrayList<Double> location;
 
-    @JsonProperty
+    @SerializedName("world")
     private String world = "world";
-    @JsonProperty
+
+    @SerializedName("yaw")
     private Float yaw = null;
-    @JsonProperty
+
+    @SerializedName("pitch")
     private Float pitch = null;
 
     public Location getLocation() {

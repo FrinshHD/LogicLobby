@@ -1,7 +1,6 @@
 package de.frinshhd.logiclobby.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import de.frinshhd.logiclobby.Main;
 import de.frinshhd.logiclobby.utils.ItemTags;
 import de.frinshhd.logiclobby.utils.LoreBuilder;
@@ -19,46 +18,40 @@ import java.util.List;
 
 public class ConfigServer {
 
-    @JsonIgnore
-    public String message = null;
-    @JsonProperty
+    public transient String message = null;
+    @SerializedName("id")
     private String id;
-    @JsonProperty
+    @SerializedName("name")
     private String name = "Lobby";
-    @JsonProperty
+    @SerializedName("description")
     private String description = null;
-    @JsonProperty
+    @SerializedName("serverName")
     private String serverName = null;
-    @JsonProperty
+    @SerializedName("item")
     private Item item = new Item();
-    @JsonProperty
+    @SerializedName("location")
     private List<Double> location = null;
-    @JsonProperty
+    @SerializedName("world")
     private String world = "world";
-    @JsonProperty
+    @SerializedName("yaw")
     private Float yaw = null;
-    @JsonProperty
+    @SerializedName("pitch")
     private Float pitch = null;
-
-    @JsonProperty
+    @SerializedName("task")
     private String task = null;
 
-    @JsonIgnore
     public ItemStack getItem() {
         return getItem(getId(), null);
     }
 
-    @JsonIgnore
     public ItemStack getItem(String tagID) {
         return getItem(tagID, null);
     }
 
-    @JsonIgnore
     public ItemStack getItem(Material material) {
         return getItem(getId(), material);
     }
 
-    @JsonIgnore
     public ItemStack getItem(String tagID, Material material) {
         if (this.item.getMaterial() != null) {
             material = this.item.getMaterial();
@@ -74,7 +67,6 @@ public class ConfigServer {
         ItemTags.tagItemMeta(itemMeta, tagID);
 
         item.setItemMeta(itemMeta);
-
 
         return item;
     }
@@ -96,12 +88,10 @@ public class ConfigServer {
     }
 
     public void execute(Player player) {
-        //If player should just be teleported to a location
         if (location != null) {
             player.teleport(getLocation());
             return;
         }
-
 
         if (Main.getManager().getConfig().hasCloudNetSupportEnabled()) {
             //Todo: add CloudNet support

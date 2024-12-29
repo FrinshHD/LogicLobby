@@ -1,25 +1,28 @@
 package de.frinshhd.logiclobby.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import de.frinshhd.logiclobby.utils.DatabaseTypes;
 
 public class Database {
 
-    @JsonProperty
+    @SerializedName("username")
     public String username = null;
-    @JsonProperty
+
+    @SerializedName("password")
     public String password = null;
-    @JsonProperty
+
+    @SerializedName("database")
     public String database = "LogicLobby";
-    @JsonProperty
+
+    @SerializedName("host")
     public String host = "127.0.0.1";
-    @JsonProperty
+
+    @SerializedName("port")
     public int port = 3306;
-    @JsonProperty
+
+    @SerializedName("type")
     private String type = "sqlite";
 
-    @JsonIgnore
     public DatabaseTypes getType() {
         return DatabaseTypes.valueOf(type.toUpperCase());
     }

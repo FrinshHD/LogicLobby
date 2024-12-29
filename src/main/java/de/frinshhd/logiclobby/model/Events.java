@@ -1,39 +1,39 @@
 package de.frinshhd.logiclobby.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import org.bukkit.GameMode;
 
 public class Events {
 
-    @JsonProperty
+    @SerializedName("noDamage")
     private boolean noDamage = true;
-    @JsonProperty
+    @SerializedName("noHunger")
     private boolean noHunger = true;
-    @JsonProperty
+    @SerializedName("noWeatherChange")
     private boolean noWeatherChange = true;
-    @JsonProperty
+    @SerializedName("noTimeChange")
     private boolean noTimeChange = true;
-    @JsonProperty
+    @SerializedName("noBlockBreak")
     private boolean noBlockBreak = true;
-    @JsonProperty
+    @SerializedName("noBlockPlace")
     private boolean noBlockPlace = true;
-    @JsonProperty
+    @SerializedName("noItemDrop")
     private boolean noItemDrop = true;
-    @JsonProperty
+    @SerializedName("noItemPickup")
     private boolean noItemPickup = true;
-    @JsonProperty
+    @SerializedName("noItemCraft")
     private boolean noItemCraft = true;
-    @JsonProperty
+    @SerializedName("noItemConsume")
     private boolean noItemConsume = true;
-    @JsonProperty
+    @SerializedName("noEntityDamage")
     private boolean noEntityDamage = true;
-    @JsonProperty
+    @SerializedName("noEntityInteract")
     private boolean noEntityInteract = true;
-    @JsonProperty
+    @SerializedName("noEntitySpawn")
     private boolean noEntitySpawn = true;
-    @JsonProperty
+    @SerializedName("lowestY")
     private Long lowestY = null;
-    @JsonProperty
+    @SerializedName("joinGamemode")
     private String joinGamemode = null;
 
     public boolean isNoDamage() {
@@ -103,5 +103,4 @@ public class Events {
             return null;
         }
     }
-
 }

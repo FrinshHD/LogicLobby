@@ -1,7 +1,6 @@
 package de.frinshhd.logiclobby.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import de.frinshhd.logiclobby.utils.ItemTags;
 import de.frinshhd.logiclobby.utils.LoreBuilder;
 import de.frinshhd.logiclobby.utils.MessageFormat;
@@ -13,20 +12,19 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class LobbyTask {
 
-    @JsonProperty
+    @SerializedName("taskName")
     private String taskName = null;
 
-    @JsonProperty
+    @SerializedName("item")
     private Item item = new Item();
 
-    @JsonProperty
+    @SerializedName("description")
     private String description = "";
 
     public String getTaskName() {
         return this.taskName;
     }
 
-    @JsonIgnore
     public ItemStack getItem(String serverName, Material material) {
         ItemStack item = this.item.getItem(material);
 
@@ -38,7 +36,6 @@ public class LobbyTask {
         ItemTags.tagItemMeta(itemMeta, serverName);
 
         item.setItemMeta(itemMeta);
-
 
         return item;
     }

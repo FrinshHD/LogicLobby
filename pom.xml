@@ -143,23 +143,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.18.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>2.18.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-yaml</artifactId>
-            <version>2.18.1</version>
-        </dependency>
-        <dependency>
             <groupId>eu.cloudnetservice.cloudnet</groupId>
             <artifactId>bridge</artifactId>
             <version>4.0.0-RC9</version>
@@ -200,6 +183,12 @@
             <artifactId>controller-api</artifactId>
             <version>0.0.30-dev.864aa58</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>2.3</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

@@ -1,7 +1,6 @@
 package de.frinshhd.logiclobby.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import de.frinshhd.logiclobby.itemsystem.items.PlayerHider;
 import de.frinshhd.logiclobby.menusystem.LobbySwitcherMenu;
 import de.frinshhd.logiclobby.menusystem.TeleporterMenu;
@@ -16,25 +15,25 @@ import java.util.ArrayList;
 
 public class ClickItem extends Item {
 
-    @JsonProperty
+    @SerializedName("id")
     private String id;
 
-    @JsonProperty
+    @SerializedName("friendlyName")
     private String friendlyName = null;
 
-    @JsonProperty
+    @SerializedName("description")
     private String description = null;
 
-    @JsonProperty
+    @SerializedName("type")
     private ClickItemType type = null;
 
-    @JsonProperty
+    @SerializedName("menu")
     private String menu = null;
 
-    @JsonProperty
+    @SerializedName("items")
     private ArrayList<ClickItem> items = new ArrayList<>();
 
-    @JsonProperty
+    @SerializedName("toggledMaterial")
     private String toggledMaterial = null;
 
     public String getDescription() {
@@ -65,7 +64,6 @@ public class ClickItem extends Item {
         return type;
     }
 
-    @JsonIgnore
     public Material getToggledMaterial() {
         return Material.getMaterial(toggledMaterial);
     }

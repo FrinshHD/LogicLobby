@@ -224,29 +224,29 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
                         // Making sure we do not go beyond the bounds of the list
                         if (currentSlot < config.getLobbySwitcher().getLobbyServers().size()) {
                             // Getting the custom block from the list
-                            ConfigServer lobbyConfigServer = config.getLobbySwitcher().getLobbyServers().get(currentSlot);
+                            ConfigServer lobbyserver = config.getLobbySwitcher().getLobbyServers().get(currentSlot);
                             // Filling the field with the custom block
 
                             int slot = i;
 
-                            if (lobbyConfigServer.getItemSlot() >= 0 && lobbyConfigServer.getItemSlot() < getSlots()) {
-                                slot = lobbyConfigServer.getItemSlot();
+                            if (lobbyserver.getItemSlot() >= 0 && lobbyserver.getItemSlot() < getSlots()) {
+                                slot = lobbyserver.getItemSlot();
                             }
 
-                            getCount(player, lobbyConfigServer.getServerName());
+                            getCount(player, lobbyserver.getServerName());
 
-                            ItemStack item = lobbyConfigServer.getItem(config.getLobbySwitcher().getLobbyItem().getMaterialState(LobbyState.UNREACHABLE));
+                            ItemStack item = lobbyserver.getItem(config.getLobbySwitcher().getLobbyItem().getMaterialState(LobbyState.UNREACHABLE));
 
                             ItemMeta itemMeta = item.getItemMeta();
 
-                            String lore = SpigotTranslator.replacePlaceholders(lobbyConfigServer.getDescription(), new TranslatorPlaceholder("playercount", "0"), new TranslatorPlaceholder("status", SpigotTranslator.build("status.offline")));
+                            String lore = SpigotTranslator.replacePlaceholders(lobbyserver.getDescription(), new TranslatorPlaceholder("playercount", "0"), new TranslatorPlaceholder("status", SpigotTranslator.build("status.offline")));
 
                             itemMeta.setLore(LoreBuilder.build(lore, ChatColor.getByChar(SpigotTranslator.build("items.standardDescriptionColor").substring(1))));
 
                             item.setItemMeta(itemMeta);
 
                             inventory.setItem(slot, item);
-                            items.put(lobbyConfigServer.getServerName(), new SavedItem(slot, item, lobbyConfigServer, lobbyConfigServer.getDescription()));
+                            items.put(lobbyserver.getServerName(), new SavedItem(slot, item, lobbyserver, lobbyserver.getDescription()));
 
                             currentSlot++; // Move to the next custom block in the list
                         } else {
@@ -307,24 +307,24 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
             return;
         }
 
-        ConfigServer configServer = null;
+        ConfigServer server = null;
 
         for (ConfigServer servers : config.getLobbySwitcher().getLobbyServers()) {
             if (servers.getId().equals(id)) {
-                configServer = servers;
+                server = servers;
                 break;
             }
         }
 
-        if (configServer == null) {
+        if (server == null) {
             return;
         }
 
         Sounds.itemClick(player);
 
-        configServer.execute(player);
-        if (configServer.getMessage() != null) {
-            player.sendMessage(MessageFormat.build(configServer.getMessage()));
+        server.execute(player);
+        if (server.getMessage() != null) {
+            player.sendMessage(MessageFormat.build(server.getMessage()));
         }
     }
 
