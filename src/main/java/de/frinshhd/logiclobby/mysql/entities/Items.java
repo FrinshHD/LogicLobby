@@ -1,18 +1,19 @@
 package de.frinshhd.logiclobby.mysql.entities;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "Items")
 public class Items {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final Gson gson = new Gson();
+    private static final Type type = new TypeToken<HashMap<String, Object>>() {}.getType();
 
     @DatabaseField(id = true)
     private UUID uuid;
@@ -32,19 +33,12 @@ public class Items {
         return uuid;
     }
 
-
     public void putItems(String item, Object object) {
         HashMap<String, Object> items;
         if (this.items == null || this.items.isEmpty() || this.items.equals("{}")) {
             items = new HashMap<>();
         } else {
-            items = (HashMap<String, Object>) stringToHashMap(this.items);
-        }
-
-        if (items.containsKey(item)) {
-            items.put(item, object);
-            this.items = hashMapToString(items);
-            return;
+            items = stringToHashMap(this.items);
         }
 
         items.put(item, object);
@@ -56,27 +50,14 @@ public class Items {
             return new HashMap<>();
         }
 
-        return (HashMap<String, Object>) stringToHashMap(this.items);
+        return stringToHashMap(this.items);
     }
 
-    public Map<String, Object> stringToHashMap(String jsonString) {
-        Map<String, Object> resultMap = null;
-        try {
-            resultMap = objectMapper.readValue(jsonString, new TypeReference<HashMap<String, Object>>() {
-            });
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return resultMap;
+    public HashMap<String, Object> stringToHashMap(String jsonString) {
+        return gson.fromJson(jsonString, type);
     }
 
     public String hashMapToString(Map<String, Object> map) {
-        String jsonString = null;
-        try {
-            jsonString = objectMapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return jsonString;
+        return gson.toJson(map);
     }
 }
