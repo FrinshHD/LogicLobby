@@ -14,8 +14,8 @@ public class LobbySwitcher {
     @SerializedName("lobbyTask")
     private LobbyTask lobbyTask = null;
 
-    @SerializedName("lobbyservers")
-    private ArrayList<ConfigServer> lobbyservers = new ArrayList<>();
+    @SerializedName("lobbyServers")
+    private ArrayList<ConfigServer> lobbyServers = new ArrayList<>();
 
     @SerializedName("inventoryRows")
     private int inventoryRows = 3;
@@ -25,7 +25,7 @@ public class LobbySwitcher {
     }
 
     public ArrayList<ConfigServer> getLobbyServers() {
-        return this.lobbyservers;
+        return this.lobbyServers;
     }
 
     public FillerItem getFillerItem() {
