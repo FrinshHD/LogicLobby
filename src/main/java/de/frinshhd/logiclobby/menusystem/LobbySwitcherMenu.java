@@ -1,8 +1,5 @@
 package de.frinshhd.logiclobby.menusystem;
 
-import app.simplecloud.controller.api.ControllerApi;
-import app.simplecloud.controller.shared.group.Group;
-import build.buf.gen.simplecloud.controller.v1.ServerState;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -34,9 +31,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
-
-import app.simplecloud.controller.shared.server.Server;
 
 public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
 
@@ -105,89 +99,6 @@ public class LobbySwitcherMenu extends Menu implements PluginMessageListener {
 
                             // Filling the field with the custom block
                             ItemStack item = config.getLobbySwitcher().getLobbyTask().getItem(lobbyServer.name(), config.getLobbySwitcher().getLobbyItem().getMaterialState(lobbyState));
-
-                            ItemMeta itemMeta = item.getItemMeta();
-
-                            String lore;
-                            if (status) {
-                                lore = SpigotTranslator.replacePlaceholders(config.getLobbySwitcher().getLobbyTask().getDescription(), new TranslatorPlaceholder("playercount", String.valueOf(playerCount)), new TranslatorPlaceholder("status", SpigotTranslator.build("status.online")));
-                            } else {
-                                lore = SpigotTranslator.replacePlaceholders(config.getLobbySwitcher().getLobbyTask().getDescription(), new TranslatorPlaceholder("playercount", String.valueOf(playerCount)), new TranslatorPlaceholder("status", SpigotTranslator.build("status.offline")));
-                            }
-
-                            itemMeta.setLore(LoreBuilder.build(lore, ChatColor.getByChar(SpigotTranslator.build("items.standardDescriptionColor").substring(1))));
-
-                            item.setItemMeta(itemMeta);
-
-                            inventory.setItem(i, item);
-                            currentSlot++; // Move to the next custom block in the list
-                        } else {
-                            // If the list of custom blocks is exhausted, break
-                            break;
-                        }
-                    }
-                }
-            }
-        } else if (config.hasSimpleCloudSupportEnabled()) {
-
-            ControllerApi.Future controller = SimpleCloudWrapper.getControllerApi();
-            //SimpleCloud v3 implementation
-            List<Server> services = null;
-            try {
-                services = controller.getServers().getServersByGroup(config.getLobbySwitcher().getLobbyTask().getTaskName()).get();
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
-            }
-
-            int currentSlot = 0;
-
-            // Iterating through the inventory
-            for (int i = 0; i < getSlots(); i++) {
-                // Checking if the field is not in the left or right column
-                if (i % 9 != 0 && i % 9 != 8) {
-                    // Checking if the field is not in the first or last row
-                    if (i >= 9 && i < getSlots() - 9) {
-                        // Making sure we do not go beyond the bounds of the list
-                        if (currentSlot < services.size()) {
-                            // Getting the custom block from the list
-                            Server lobbyServer = services.get(currentSlot);
-                            ServerState state = lobbyServer.getState();
-
-                            LobbyState lobbyState = LobbyState.UNREACHABLE;
-                            int playerCount = 0;
-
-                            if (state.equals(ServerState.AVAILABLE) ||
-                                    state.equals(ServerState.STARTING) ||
-                                    state.equals(ServerState.STOPPING)) {
-                                playerCount = (int) lobbyServer.getPlayerCount();
-
-                                if (playerCount == (int) lobbyServer.getMaxPlayers()) {
-                                    lobbyState = LobbyState.NORMAL;
-                                } else if (state.equals(ServerState.STARTING) || state.equals(ServerState.STOPPING)) {
-                                    lobbyState = LobbyState.UNREACHABLE;
-                                } else if (playerCount == 0) {
-                                    lobbyState = LobbyState.EMPTY;
-                                }
-
-                                if (System.getenv("SIMPLECLOUD_UNIQUE_ID").equalsIgnoreCase(lobbyServer.getUniqueId())) {
-                                    lobbyState = LobbyState.CONNECTED;
-                                }
-                            }
-
-                            boolean status = !lobbyState.equals(LobbyState.UNREACHABLE);
-
-                            Group lobbyGroup = null;
-
-                            try {
-                                lobbyGroup = controller.getGroups().getGroupByName(lobbyServer.getGroup()).get();
-                            } catch (InterruptedException | ExecutionException e) {
-                                throw new RuntimeException(e);
-                            }
-
-                            String serverName = lobbyServer.getGroup() + "-" + lobbyServer.getNumericalId();
-
-                            // Filling the field with the custom block
-                            ItemStack item = config.getLobbySwitcher().getLobbyTask().getItem(serverName, config.getLobbySwitcher().getLobbyItem().getMaterialState(lobbyState));
 
                             ItemMeta itemMeta = item.getItemMeta();
 

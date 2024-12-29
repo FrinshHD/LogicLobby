@@ -1,5 +1,4 @@
 enableCloudNetSupport: false
-enableSimpleCloudSupport: false
 defaultHotbarSlot: 4
 spawn:
   teleportOnJoin: true

@@ -1,8 +1,6 @@
 package de.frinshhd.logiclobby.model;
 
-import app.simplecloud.controller.api.ControllerApi;
 import com.google.gson.annotations.SerializedName;
-import de.frinshhd.logiclobby.utils.SimpleCloudWrapper;
 import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
@@ -20,8 +18,6 @@ public class Config {
     private List<ClickItem> items = new ArrayList<>();
     @SerializedName("enableCloudNetSupport")
     private boolean enableCloudNetSupport = false;
-    @SerializedName("enableSimpleCloudSupport")
-    private boolean enableSimpleCloudSupport = false;
     @SerializedName("defaultHotbarSlot")
     private int defaultHotbarSlot = -1;
     @SerializedName("spawn")
@@ -35,18 +31,6 @@ public class Config {
         }
 
         return enableCloudNetSupport;
-    }
-
-    public boolean hasSimpleCloudSupportEnabled() {
-        ControllerApi.Future controllerApi = SimpleCloudWrapper.getControllerApi();
-
-        try {
-            controllerApi.getServers().getAllServers();
-        } catch (Exception e) {
-            return false;
-        }
-
-        return enableSimpleCloudSupport;
     }
 
     public LobbySwitcher getLobbySwitcher() {

@@ -81,14 +81,6 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
-        <repository>
-            <id>simplecloud-snapshots</id>
-            <url>https://repo.simplecloud.app/snapshots/</url>
-        </repository>
-        <repository>
-            <id>buf</id>
-            <url>https://buf.build/gen/maven</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -177,12 +169,6 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>app.simplecloud.controller</groupId>
-            <artifactId>controller-api</artifactId>
-            <version>0.0.30-dev.864aa58</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
