@@ -1,9 +1,11 @@
 package de.frinshhd.logiclobby.commands;
 
 import de.frinshhd.logiclobby.Main;
+import de.frinshhd.logiclobby.model.Config;
 import de.frinshhd.logiclobby.utils.SpigotCommandExecutor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,7 +24,17 @@ public class LogicLobbyCommand extends SpigotCommandExecutor {
             return true;
         }
 
-        switch (args[0]) {
+        switch (args[0].toLowerCase()) {
+            case "setspawn":
+                if (!sender.hasPermission("logiclobby.admin.setspawn") || !(sender instanceof Player player)) {
+                    return true;
+                }
+
+                Config config = Main.getManager().getConfig();
+                config.getSpawn().setLocation(player.getLocation());
+                Main.getManager().saveConfig(config);
+                sender.sendMessage("§aSpawn successfully set.");
+                return true;
             case "reload":
                 if (!sender.hasPermission("logiclobby.admin.reload")) {
                     return true;
@@ -50,6 +62,7 @@ public class LogicLobbyCommand extends SpigotCommandExecutor {
         if (args.length <= 1) {
 
             List<String> possibleArguments = new ArrayList<>(List.of(
+                    "setSpawn",
                     "reload",
                     "version"
             ));

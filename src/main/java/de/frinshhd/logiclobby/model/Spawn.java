@@ -45,4 +45,15 @@ public class Spawn {
     public boolean isTeleportOnJoin() {
         return teleportOnJoin;
     }
+
+    public void setLocation(Location location) {
+        this.location = new ArrayList<>();
+        this.location.add(location.getX());
+        this.location.add(location.getY());
+        this.location.add(location.getZ());
+
+        this.world = location.getWorld().getName();
+        this.yaw = location.getYaw();
+        this.pitch = location.getPitch();
+    }
 }

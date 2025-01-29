@@ -22,7 +22,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.representer.Representer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -83,8 +85,34 @@ public class Manager implements PluginMessageListener, Listener {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public void saveConfig(Config config) {
+        // Convert Config object to JSON string
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonString = gson.toJson(config);
 
+        // Convert JSON string to Map
+        Map<String, Object> map = gson.fromJson(jsonString, Map.class);
+
+        // Set up SnakeYAML
+        DumperOptions options = new DumperOptions();
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+
+        Representer representer = new Representer(options);
+        representer.getPropertyUtils().setSkipMissingProperties(true);
+        representer.addClassTag(Config.class, org.yaml.snakeyaml.nodes.Tag.MAP);
+
+        Yaml yaml = new Yaml(representer, options);
+
+        // Convert Map to YAML and save to file
+        try (FileWriter writer = new FileWriter("plugins/LogicLobby/config.yml")) {
+            yaml.dump(map, writer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        load();
     }
 
     public void connectToDB() {

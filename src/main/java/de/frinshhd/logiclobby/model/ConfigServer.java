@@ -13,8 +13,10 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ConfigServer {
 
@@ -30,7 +32,7 @@ public class ConfigServer {
     @SerializedName("item")
     private Item item = new Item();
     @SerializedName("location")
-    private List<Double> location = null;
+    private ArrayList<String> location = null;
     @SerializedName("world")
     private String world = "world";
     @SerializedName("yaw")
@@ -101,7 +103,15 @@ public class ConfigServer {
     }
 
     public Location getLocation() {
-        Location location = new Location(getWorld(), this.location.get(0), this.location.get(1), this.location.get(2));
+        if (location.get(0).equalsIgnoreCase("spawn")) {
+            return Main.getManager().getConfig().getSpawn().getLocation();
+        }
+
+        ArrayList<Double> locationDouble = new ArrayList<>();
+
+        this.location.forEach(string -> locationDouble.add(Double.parseDouble(string)));
+
+        Location location = new Location(getWorld(), locationDouble.get(0), locationDouble.get(1), locationDouble.get(2));
 
         if (this.yaw != null) {
             location.setYaw(this.yaw);

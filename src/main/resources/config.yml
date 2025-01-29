@@ -109,7 +109,7 @@ teleporter:
       item:
         material: BEACON
         slot: 44
-      location: [ 0,80,0 ]
+      location: [ spawn ]
 events:
   noDamage: true
   noHunger: true

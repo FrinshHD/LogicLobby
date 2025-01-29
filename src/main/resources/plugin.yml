@@ -30,6 +30,8 @@ permissions:
     default: true
   logiclobby.gadget.teleportBow:
     default: op
+  logiclobby.admin.setspawn:
+    default: op
 
 commands:
   logiclobby:
