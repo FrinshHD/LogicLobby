@@ -28,7 +28,7 @@ public class Spawn {
     private Float pitch = null;
 
     // Moon; helper function.
-    public static boolean isInSpawnWorld(Player player) {
+    public boolean isInSpawnWorld(Player player) {
         Spawn spawn = getManager().getConfig().getSpawn();
         return player.getWorld().equals(spawn.getWorld());
     }

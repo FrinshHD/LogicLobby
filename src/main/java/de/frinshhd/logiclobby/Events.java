@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupArrowEvent;
 import org.bukkit.inventory.ItemStack;
 
+import static de.frinshhd.logiclobby.Main.getInstance;
 import static de.frinshhd.logiclobby.Main.getManager;
 
 public class Events implements Listener {
@@ -26,7 +27,7 @@ public class Events implements Listener {
     public void onPlayerDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
 
-        if (Spawn.isInSpawnWorld(player) && getManager().getConfig().getEvents().isNoDamage()) {
+        if (getManager().getConfig().getSpawn().isInSpawnWorld(player) && getManager().getConfig().getEvents().isNoDamage()) {
             event.setCancelled(true);
         }
     }
@@ -35,14 +36,14 @@ public class Events implements Listener {
     public void onPlayerHunger(FoodLevelChangeEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
 
-        if (Spawn.isInSpawnWorld(player) && getManager().getConfig().getEvents().isNoHunger()) {
+        if (getManager().getConfig().getSpawn().isInSpawnWorld(player) && getManager().getConfig().getEvents().isNoHunger()) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        if (Spawn.isInSpawnWorld(event.getPlayer()) && getManager().getConfig().getEvents().isNoBlockBreak()
+        if (getManager().getConfig().getSpawn().isInSpawnWorld(event.getPlayer()) && getManager().getConfig().getEvents().isNoBlockBreak()
                 && !event.getPlayer().hasPermission("logiclobby.admin.build")) {
             event.setCancelled(true);
         }
@@ -50,7 +51,7 @@ public class Events implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (Spawn.isInSpawnWorld(event.getPlayer()) && getManager().getConfig().getEvents().isNoBlockPlace()
+        if (getManager().getConfig().getSpawn().isInSpawnWorld(event.getPlayer()) && getManager().getConfig().getEvents().isNoBlockPlace()
                 && !event.getPlayer().hasPermission("logiclobby.admin.build")) {
             event.setCancelled(true);
         }
@@ -58,7 +59,7 @@ public class Events implements Listener {
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
-        if (Spawn.isInSpawnWorld(event.getPlayer()) && getManager().getConfig().getEvents().isNoItemDrop()
+        if (getManager().getConfig().getSpawn().isInSpawnWorld(event.getPlayer()) && getManager().getConfig().getEvents().isNoItemDrop()
                 && !event.getPlayer().hasPermission("logiclobby.admin.build")) {
             event.setCancelled(true);
         }
@@ -68,7 +69,7 @@ public class Events implements Listener {
     public void onItemPickup(EntityPickupItemEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
 
-        if (Spawn.isInSpawnWorld(player) && getManager().getConfig().getEvents().isNoItemPickup()
+        if (getManager().getConfig().getSpawn().isInSpawnWorld(player) && getManager().getConfig().getEvents().isNoItemPickup()
                 && !player.hasPermission("logiclobby.admin.build")) {
             event.setCancelled(true);
         }
@@ -77,7 +78,7 @@ public class Events implements Listener {
     @EventHandler
     public void onItemCraft(PrepareItemCraftEvent event) {
         event.getViewers().forEach(player -> {
-            if (player instanceof Player p && Spawn.isInSpawnWorld(p) && getManager().getConfig().getEvents().isNoItemCraft()
+            if (player instanceof Player p && getManager().getConfig().getSpawn().isInSpawnWorld(p) && getManager().getConfig().getEvents().isNoItemCraft()
                     && !p.hasPermission("logiclobby.admin.build")) {
                 event.getInventory().setResult(new ItemStack(Material.AIR));
             }
@@ -86,7 +87,7 @@ public class Events implements Listener {
 
     @EventHandler
     public void onItemConsume(PlayerItemConsumeEvent event) {
-        if (Spawn.isInSpawnWorld(event.getPlayer()) && getManager().getConfig().getEvents().isNoItemConsume()
+        if (getManager().getConfig().getSpawn().isInSpawnWorld(event.getPlayer()) && getManager().getConfig().getEvents().isNoItemConsume()
                 && !event.getPlayer().hasPermission("logiclobby.admin.build")) {
             event.setCancelled(true);
         }
@@ -110,7 +111,7 @@ public class Events implements Listener {
 
     @EventHandler
     public void onUnderLowestY(PlayerMoveEvent event) {
-        if (!Spawn.isInSpawnWorld(event.getPlayer())) return;
+        if (!getManager().getConfig().getSpawn().isInSpawnWorld(event.getPlayer())) return;
         
         if (getManager().getConfig().getEvents().getLowestY() != null
                 && event.getPlayer().getLocation().getY() < getManager().getConfig().getEvents().getLowestY()) {
@@ -121,7 +122,7 @@ public class Events implements Listener {
 
     @EventHandler
     public void onArrowPickup(PlayerPickupArrowEvent event) {
-        if (Spawn.isInSpawnWorld(event.getPlayer()) && !event.getPlayer().hasPermission("logiclobby.admin.build")) {
+        if (getManager().getConfig().getSpawn().isInSpawnWorld(event.getPlayer()) && !event.getPlayer().hasPermission("logiclobby.admin.build")) {
             event.setCancelled(true);
             event.getArrow().remove();
         }
