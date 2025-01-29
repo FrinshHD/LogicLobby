@@ -4,8 +4,11 @@ import com.google.gson.annotations.SerializedName;
 import de.frinshhd.logiclobby.Main;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+
+import static de.frinshhd.logiclobby.Main.getManager;
 
 public class Spawn {
 
@@ -23,6 +26,12 @@ public class Spawn {
 
     @SerializedName("pitch")
     private Float pitch = null;
+
+    // Moon; helper function.
+    public static boolean isInSpawnWorld(Player player) {
+        Spawn spawn = getManager().getConfig().getSpawn();
+        return player.getWorld().equals(spawn.getWorld());
+    }
 
     public Location getLocation() {
         Location location = new Location(getWorld(), this.location.get(0), this.location.get(1), this.location.get(2));
