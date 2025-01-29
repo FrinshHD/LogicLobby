@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ClickItem extends Item {
 
@@ -29,6 +30,9 @@ public class ClickItem extends Item {
 
     @SerializedName("menu")
     private String menu = null;
+
+    @SerializedName("command")
+    private String command = null;
 
     @SerializedName("items")
     private ArrayList<ClickItem> items = new ArrayList<>();
@@ -98,6 +102,12 @@ public class ClickItem extends Item {
     }
 
     public void use(Player player) {
+        // Moon: no menu type, do command
+        if (getMenu() == MenuTypes.NONE && command != null && !command.isEmpty()) {
+            player.performCommand(command);
+            return;
+        }
+
         switch (getType()) {
             case MENU:
                 switch (getMenu()) {
