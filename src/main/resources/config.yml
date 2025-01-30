@@ -12,6 +12,7 @@ items:
     material: COMPASS
     slot: 4
     menu: TELEPORTER
+    command: ''
   - id: lobbyswitcher
     friendlyName: "&2Lobby-Switcher"
     material: NETHER_STAR
